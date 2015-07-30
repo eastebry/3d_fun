@@ -3,10 +3,7 @@ var server = express();
 var httpServer = require('http').Server(server);
 var io = require('socket.io')(httpServer);
 
-SERVER_UPDATE_INTERVAL = 50;
-
-var clientSockets = [];
-var gameState = {};
+var SERVER_UPDATE_INTERVAL = 50;
 
 server.use(express.static(__dirname + '/../'));
 httpServer.listen(8000);
@@ -14,36 +11,31 @@ httpServer.listen(8000);
 var socketRoomMap = {};
 var roomState = {};
 
-io.on('connection', function (socket) {
-  socket.on('room', function (data) {
-    var roomId = data['room'];
-    socket.join(roomId);
-    socketRoomMap[socket.id] = roomId;
+io.on('connection', function(socket) {
 
-    if (!roomState[roomId]) {
-      // if it is a new room
-      roomState[roomId] = {};
-      setInterval(function() {
-        io.to(roomId).emit('serverUpdate', roomState[roomId]);
-      }, SERVER_UPDATE_INTERVAL);
-    }
-  });
+    socket.on('room', function(data) {
+        var roomId = data['room'];
+        socket.join(roomId);
+        socketRoomMap[socket.id] = roomId;
 
-  socket.on('clientUpdate', function (data) {
-      var gameState = roomState[socketRoomMap[socket.id]];
-      gameState[socket.id] = data;
-  });
+        if (!roomState[roomId]) {
+            roomState[roomId] = {};
+            setInterval(function() {
+                io.to(roomId).emit('serverUpdate', roomState[roomId]);
+            }, SERVER_UPDATE_INTERVAL);
+        }
+    });
 
-});
-// serve
-//
-// app.get('/', function (req, res) {
-//   res.sendfile('../index.html');
-// });
-//
-// io.on('connection', function (socket) {
-//   socket.emit('news', { hello: 'world' });
-//   socket.on('my other event', function (data) {
-//     console.log(data);
-//   });
-// });
+    socket.on('clientUpdate', function(data) {
+        var gameState = roomState[socketRoomMap[socket.id]];
+        if (gameState) {
+            gameState[socket.id] = data;
+        }
+    });
+
+    socket.on('disconnect', function() {
+        var gameState = roomState[socketRoomMap[socket.id]];
+        delete gameState[socket.id];
+        delete socketRoomMap[socket.id];
+    })
+})
