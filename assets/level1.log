@@ -1,0 +1,120 @@
+	Babylon.js Exporter version: 1.8.2, Blender version: 2.75 (sub 0)
+========= Conversion from Blender to Babylon.js =========
+	Python World class constructor completed
+	processing begun of mesh:  Cube.012
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.011
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.010
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.009
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.008
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.007
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.006
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.005
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.004
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.003
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.002
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube.001
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Cube
+		WARNING:  No materials have been assigned: 
+		num positions      :  8
+		num normals        :  8
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
+	processing begun of mesh:  Plane
+		WARNING:  No materials have been assigned: 
+		num positions      :  1093
+		num normals        :  1093
+		num uvs            :  0
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  6546
+	processing begun of camera (FreeCamera):  Camera
+	processing begun of light (POINT):  Lamp
+========= Writing of scene file started =========
+========= Writing of scene file completed =========
+========= end of processing =========

@@ -14,6 +14,7 @@ function createScene(engine) {
 
     var player = new Player(scene);
     createGround(scene, 100, 100);
+    createLevel(scene);
     createSkybox(scene);
     createLights(scene);
     createBox(scene, 10,10,10);
@@ -74,6 +75,7 @@ function createLights(scene){
     light1.diffuse = new BABYLON.Color3(1, 0.7333333333333333, 0.3568627450980392);
     light1.intensity = 0.2;
 }
+
 
 
 
