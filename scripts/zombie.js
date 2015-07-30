@@ -5,6 +5,8 @@ function Zombie(scene) {
     this.createZombie(scene);
     this.nextPos = null;
     this.sleepUntil = 0;
+    this.speed = 2;
+    this.isMoving = false;
 };
 
 Zombie.prototype.createZombie = function(scene) {
@@ -21,28 +23,39 @@ Zombie.prototype.createZombie = function(scene) {
     this.zmesh = zombie;
 };
 
-Zombie.prototype.update = function() {
-    var speed = 2;
-    this.zmesh.lookAt(this.scene.activeCamera.position);
-    if (this.sleepUntil != null && new Date().getTime() > this.sleepUntil) {
-        this.sleepUntil = null;
-        this.nextPos = new BABYLON.Vector3(Math.random()*50-25, 2.5, Math.random()*50-25);
-        this.originalPos = new BABYLON.Vector3;
-        this.originalPos = this.zmesh.position;
-        var dist = BABYLON.Vector3.Distance(this.zmesh.position, this.nextPos);
-        this.timeToNextPos = dist / speed * 100;
-        this.startTime = new Date().getTime();
-        this.endTime = this.startTime + this.timeToNextPos;
-    }
+Zombie.prototype.doMovement = function() {
     var movedRatio = (new Date().getTime() - this.startTime) / (this.endTime - this.startTime); 
     if (movedRatio < 1) {
+        this.isMoving = true;
         var newPos = new BABYLON.Vector3.Lerp(this.originalPos, this.nextPos, movedRatio);
         this.zmesh.position = newPos;
     }
     else {
-        if (this.sleepUntil == null) {
-            this.sleepUntil = new Date().getTime() + Math.random()*1000;
+        this.isMoving = false;
+    }
+}
+
+Zombie.prototype.setDestination = function(nextPos) {
+    this.nextPos = nextPos;
+    this.originalPos = new BABYLON.Vector3;
+    this.originalPos = this.zmesh.position;
+    var dist = BABYLON.Vector3.Distance(this.zmesh.position, this.nextPos);
+    this.timeToNextPos = dist / this.speed * 100;
+    this.startTime = new Date().getTime();
+    this.endTime = this.startTime + this.timeToNextPos;
+}
+
+Zombie.prototype.update = function() {
+    // Always look at the camera
+    this.zmesh.lookAt(this.scene.activeCamera.position);
+
+    // Set a new destination and then sleep a random amount of time
+    if (!this.isMoving) {
+        if (new Date().getTime() > this.sleepUntil) {
+            var nextPos = new BABYLON.Vector3(Math.random()*50-25, 2.5, Math.random()*50-25);
+            this.setDestination(nextPos);
+            this.sleepUntil = new Date().getTime() + Math.random()*5000;
         }
     }
-
+    this.doMovement();
 }

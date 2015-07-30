@@ -18,8 +18,12 @@ function createScene(engine) {
     createLights(scene);
     createBox(scene, 10,10,10);
 
-    var zombie = new Zombie(scene);
-    scene.zombie = zombie;
+    // Make some zombies
+    var zombies = []
+    for (var i = 0;i<3;i++) {
+        zombies.push(new Zombie(scene));
+    }
+    scene.zombies = zombies;
     return scene;
 }
 
@@ -106,7 +110,11 @@ window.onload = function () {
         //scene.registerBeforeRender(update);
         engine.runRenderLoop(function () {
             scene.render();
-            scene.zombie.update();
+
+            // Update zombies
+            scene.zombies.map(function(that) {
+                that.update();
+            });
         });
     }
 };
