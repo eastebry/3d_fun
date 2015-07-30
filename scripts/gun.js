@@ -15,6 +15,8 @@ function Gun(name, size, scene) {
     this.animation_speed = 100;
     this.shooting = false;
 
+    this.impactSpriteManager = new BABYLON.SpriteManager("impactManager", "img/impact.png", 2000, 800, this.scene);
+
     var _this = this;
     var image = "img/weapons/" + _this.name + "_" + _this.index + ".png";
 
@@ -46,14 +48,26 @@ function Gun(name, size, scene) {
     $("#canvas").click(function () {
         if (!_this.shooting) {
             _this.shooting = true;
-            var audio = new Audio('sound/dspistol.wav');
-            audio.play();
+            _this.shoot();
             _this.updateFrame();
         }
     });
 
 }
 
+Gun.prototype.shoot = function(){
+    var audio = new Audio('sound/dspistol.wav');
+    audio.play();
+    var canvas = $('#canvas');
+    var x =  canvas.width()/2;
+    var y = canvas.height()/2;
+    var pickResult  = this.scene.pick(x, y, null, false, scene.activeCamera);
+    if (pickResult.hit) {
+        // TODO - create an impact sprite, this method looks pretty bad
+        //var newsprite = new BABYLON.Sprite("impact", this.impactSpriteManager);
+        //newsprite.position = pickResult.pickedPoint;
+    }
+}
 
 Gun.prototype.updateFrame = function(){
     this.index += this.animation_direction;
