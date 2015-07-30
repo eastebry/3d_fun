@@ -6,7 +6,7 @@ function Player(scene) {
 };
 
 Player.prototype.initCamera = function(scene) {
-    var freeCamera = new BABYLON.FreeCamera("free", new BABYLON.Vector3(0, 1, 0), scene);
+    var freeCamera = new BABYLON.FreeCamera("free", new BABYLON.Vector3(15, 1, 0), scene);
     freeCamera.minZ = 1;
     freeCamera.checkCollisions = true;
     freeCamera.applyGravity = true;
