@@ -24,7 +24,7 @@ io.on('connection', function (socket) {
       // if it is a new room
       roomState[roomId] = {};
       setInterval(function() {
-        io.to(roomId).emit('serverUpdate', roomState[roomId]):
+        io.to(roomId).emit('serverUpdate', roomState[roomId]);
       }, SERVER_UPDATE_INTERVAL);
     }
   });
