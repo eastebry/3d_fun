@@ -35,6 +35,10 @@ socket.on('serverUpdate', function(data) {
             zombie.zmesh.position.x = state.position[0];
             zombie.zmesh.position.y = state.position[1];
             zombie.zmesh.position.z = state.position[2];
+
+            zombie.zmesh.rotation.x = state.rotation[0];
+            zombie.zmesh.rotation.y = state.rotation[1];
+            zombie.zmesh.rotation.z = state.rotation[2];
         }
     }
 
