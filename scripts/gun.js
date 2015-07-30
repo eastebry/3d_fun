@@ -43,7 +43,6 @@ function Gun(name, size, scene) {
         'left': 0,
         'right': 0,
         'bottom': '45%',
-        'margin': 'auto',
         'padding': 0,
         'width': '5%',
     });
@@ -97,8 +96,8 @@ Gun.prototype.moveGun = function(e) {
 
     var mouseX = this.gunMovementX;
     var mouseY = this.gunMovementY;
-    var totalX = $('#container').width();
-    var totalY = $('#container').height();
+    var totalX = $('#canvas').width();
+    var totalY = $('#canvas').height();
     var centerX = totalX / 2;
     var centerY = totalY / 2;
     var shiftX = centerX - mouseX;
@@ -111,7 +110,5 @@ Gun.prototype.moveGun = function(e) {
     var posY = startY + (shiftY/10);
 
     $('#gun').css({ 'left': posX + 'px', 'bottom': posY + 'px' });
-    var cursorOffsetX = 70;
-    var cursorOffsetY = 250;
-    $('#cursor').css({ 'left': posX + cursorOffsetX + 'px', 'bottom': posY + cursorOffsetY + 'px' });
+    $('#cursor').css({ 'left': centerX - 25 + 'px', 'bottom': centerY - 25 + 'px' });
 }
