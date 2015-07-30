@@ -35,6 +35,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('disconnect', function() {
+        console.log("delete a player");
         var gameState = roomState[socketRoomMap[socket.id]];
         delete gameState[socket.id];
         delete socketRoomMap[socket.id];

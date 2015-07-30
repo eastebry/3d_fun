@@ -1,5 +1,6 @@
 var CLIENT_UPDATE_INTERVAL = 30;
 var mySocketId;
+var opponents = {};
 
 var socket = io.connect('http://localhost:8000');
 var roomId = 'default';
@@ -14,6 +15,27 @@ socket.on('myId', function(data) {
 
 socket.on('serverUpdate', function(data) {
     console.log(data);
+    for (var playerId in data) {
+        var state = data[playerId];
+        if (playerId === mySocketId) {
+            // this is me!!
+        }
+        else {
+            var zombie = opponents[playerId];
+            if (!zombie) {
+                zombie = new Zombie(scene);
+                if (!scene.zombies) {
+                    scene.zombies = [];
+                }
+                scene.zombies.push(zombie);
+                opponents[playerId] = zombie;
+            }
+
+            zombie.zmesh.position.x = state.position[0];
+            zombie.zmesh.position.x = state.position[1];
+            zombie.zmesh.position.x = state.position[2];
+        }
+    }
 })
 
 function getQueryStrings() {
