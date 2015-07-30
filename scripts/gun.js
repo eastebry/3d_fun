@@ -55,6 +55,8 @@ function Gun(name, size, scene) {
             _this.shooting = true;
             _this.updateFrame();
         }
+        var audio = new Audio('sound/dspistol.wav');
+        audio.play();
     });
 
 }
