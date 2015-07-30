@@ -17,6 +17,7 @@ Player.prototype.initCamera = function(scene) {
 };
 
 Player.prototype.initfpsControls = function(scene) {
+    var _this = this;
     var cam,c;
 
     // switch the hot keys.
@@ -26,6 +27,9 @@ Player.prototype.initfpsControls = function(scene) {
         c.keysLeft = [65]; // a
         c.keysDown = [83]; // s
         c.keysRight = [68]; // d
+        c.inertia = 0;
+        c.angularSensibility = 1200;
+        c.speed = 2;
     }
     var canvas = scene.getEngine().getRenderingCanvas();
     // On click event, request pointer lock
@@ -35,8 +39,28 @@ Player.prototype.initfpsControls = function(scene) {
         if (canvas.requestPointerLock) {
             canvas.requestPointerLock();
         }
-        _this.gun.registerGunMovement();;
     }, false);
+
+    // Event listener when the pointerlock is updated (or removed by pressing ESC for example).
+    var pointerlockchange = function (event) {
+        _this.controlEnabled = (
+                           document.mozPointerLockElement === canvas
+                        || document.webkitPointerLockElement === canvas
+                        || document.msPointerLockElement === canvas
+                        || document.pointerLockElement === canvas);
+        // If the user is alreday locked
+        if (!_this.controlEnabled) {
+            _this.camera.detachControl(canvas);
+        } else {
+            _this.camera.attachControl(canvas);
+        }
+    };
+
+    // Attach events to the document
+    document.addEventListener("pointerlockchange", pointerlockchange, false);
+    document.addEventListener("mspointerlockchange", pointerlockchange, false);
+    document.addEventListener("mozpointerlockchange", pointerlockchange, false);
+    document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
 };
 
 Player.prototype.createHud = function() {
