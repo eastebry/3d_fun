@@ -13,7 +13,7 @@ function createScene(engine) {
     var MCOUNT = 33;
 
     var player = new Player(scene);
-    createGround(scene, 100, 100);
+    // createGround(scene, 100, 100);
     createLevel(scene);
     createSkybox(scene);
     createLights(scene);

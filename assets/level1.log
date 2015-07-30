@@ -1,6 +1,20 @@
 	Babylon.js Exporter version: 1.8.2, Blender version: 2.75 (sub 0)
 ========= Conversion from Blender to Babylon.js =========
 	Python World class constructor completed
+	processing begun of material:  level1.Material.001
+	Diffuse texture found
+Error encountered processing image file:  /Users/jimmyt/git/3d_fun/assets/windwaker.jpg, Error:  '/Users/jimmyt/git/3d_fun/assets/windwaker.jpg' and '/Users/jimmyt/git/3d_fun/assets/windwaker.jpg' are the same file
+	Emissive texture found
+Error encountered processing image file:  /Users/jimmyt/git/3d_fun/assets/windwaker.jpg, Error:  '/Users/jimmyt/git/3d_fun/assets/windwaker.jpg' and '/Users/jimmyt/git/3d_fun/assets/windwaker.jpg' are the same file
+	Bump texture found
+Error encountered processing image file:  /Users/jimmyt/git/3d_fun/assets/windwaker.jpg, Error:  '/Users/jimmyt/git/3d_fun/assets/windwaker.jpg' and '/Users/jimmyt/git/3d_fun/assets/windwaker.jpg' are the same file
+	processing begun of mesh:  Cube.013
+		num positions      :  28
+		num normals        :  28
+		num uvs            :  56
+		num uvs2           :  0
+		num colors         :  0
+		num indices        :  36
 	processing begun of mesh:  Cube.012
 		WARNING:  No materials have been assigned: 
 		num positions      :  8
@@ -10,18 +24,16 @@
 		num colors         :  0
 		num indices        :  36
 	processing begun of mesh:  Cube.011
-		WARNING:  No materials have been assigned: 
-		num positions      :  8
-		num normals        :  8
-		num uvs            :  0
+		num positions      :  28
+		num normals        :  28
+		num uvs            :  56
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  36
 	processing begun of mesh:  Cube.010
-		WARNING:  No materials have been assigned: 
-		num positions      :  8
-		num normals        :  8
-		num uvs            :  0
+		num positions      :  28
+		num normals        :  28
+		num uvs            :  56
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  36
@@ -66,18 +78,16 @@
 		num colors         :  0
 		num indices        :  36
 	processing begun of mesh:  Cube.004
-		WARNING:  No materials have been assigned: 
-		num positions      :  8
-		num normals        :  8
-		num uvs            :  0
+		num positions      :  28
+		num normals        :  28
+		num uvs            :  56
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  36
 	processing begun of mesh:  Cube.003
-		WARNING:  No materials have been assigned: 
-		num positions      :  8
-		num normals        :  8
-		num uvs            :  0
+		num positions      :  28
+		num normals        :  28
+		num uvs            :  56
 		num uvs2           :  0
 		num colors         :  0
 		num indices        :  36
@@ -106,13 +116,12 @@
 		num colors         :  0
 		num indices        :  36
 	processing begun of mesh:  Plane
-		WARNING:  No materials have been assigned: 
-		num positions      :  1093
-		num normals        :  1093
-		num uvs            :  0
+		num positions      :  6772
+		num normals        :  6772
+		num uvs            :  13544
 		num uvs2           :  0
 		num colors         :  0
-		num indices        :  6546
+		num indices        :  13056
 	processing begun of camera (FreeCamera):  Camera
 	processing begun of light (POINT):  Lamp
 ========= Writing of scene file started =========
