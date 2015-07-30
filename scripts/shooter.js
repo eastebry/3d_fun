@@ -2,7 +2,7 @@
 
 "use strict";
 
-var freeCamera, canvas, scene;
+var freeCamera, canvas, scene, localPlayer;
 var gunMovementX = 0, gunMovementY = 0;
 var MCOUNT = 33;
 
@@ -12,13 +12,19 @@ function createScene(engine) {
     scene.collisionsEnabled = true;
     var MCOUNT = 33;
 
-    var player = new Player(scene);
-    // createGround(scene, 100, 100);
     createLevel(scene);
+    localPlayer = new Player(scene);
+    createGround(scene, 100, 100);
     createSkybox(scene);
     createLights(scene);
     createBox(scene, 10,10,10);
 
+    // Make some zombies
+    var zombies = []
+    for (var i = 0;i<3;i++) {
+        zombies.push(new Zombie(scene));
+    }
+    scene.zombies = zombies;
     return scene;
 }
 
@@ -106,6 +112,11 @@ window.onload = function () {
         //scene.registerBeforeRender(update);
         engine.runRenderLoop(function () {
             scene.render();
+
+            // Update zombies
+            scene.zombies.map(function(that) {
+                that.update();
+            });
         });
     }
 };
