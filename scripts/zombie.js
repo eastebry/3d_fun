@@ -1,6 +1,10 @@
+
+
 function Zombie(scene) {
     this.scene = scene;
     this.createZombie(scene);
+    this.nextPos = null;
+    this.sleepUntil = 0;
 };
 
 Zombie.prototype.createZombie = function(scene) {
@@ -18,5 +22,27 @@ Zombie.prototype.createZombie = function(scene) {
 };
 
 Zombie.prototype.update = function() {
+    var speed = 2;
     this.zmesh.lookAt(this.scene.activeCamera.position);
+    if (this.sleepUntil != null && new Date().getTime() > this.sleepUntil) {
+        this.sleepUntil = null;
+        this.nextPos = new BABYLON.Vector3(Math.random()*50-25, 2.5, Math.random()*50-25);
+        this.originalPos = new BABYLON.Vector3;
+        this.originalPos = this.zmesh.position;
+        var dist = BABYLON.Vector3.Distance(this.zmesh.position, this.nextPos);
+        this.timeToNextPos = dist / speed * 100;
+        this.startTime = new Date().getTime();
+        this.endTime = this.startTime + this.timeToNextPos;
+    }
+    var movedRatio = (new Date().getTime() - this.startTime) / (this.endTime - this.startTime); 
+    if (movedRatio < 1) {
+        var newPos = new BABYLON.Vector3.Lerp(this.originalPos, this.nextPos, movedRatio);
+        this.zmesh.position = newPos;
+    }
+    else {
+        if (this.sleepUntil == null) {
+            this.sleepUntil = new Date().getTime() + Math.random()*1000;
+        }
+    }
+
 }
