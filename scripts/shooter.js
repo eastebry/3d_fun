@@ -63,6 +63,7 @@ function createGround(scene, w, h){
 
 function createSkybox(scene) {
     var skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
+    skybox.infiniteDistance = true;
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
@@ -96,15 +97,6 @@ window.onload = function () {
 
         window.addEventListener("resize", function () {
             engine.resize();
-        });
-
-        canvas.addEventListener("mousedown", function (evt) {
-            var pickResult = scene.pick(evt.clientX, evt.clientY);
-            if (pickResult.hit) {
-                var dir = pickResult.pickedPoint.subtract(scene.activeCamera.position);
-                dir.normalize();
-                pickResult.pickedMesh.applyImpulse(dir.scale(50), pickResult.pickedPoint);
-            }
         });
 
         scene = createScene(engine);

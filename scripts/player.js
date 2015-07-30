@@ -2,7 +2,12 @@ function Player(scene) {
     this.scene = scene;
     this.initCamera(scene);
     this.gun = new Gun('pistol', 4, scene);
+    this.rocket = new Rocket('rocket', 4, scene);
+    this.rocket.deactivate();
+    this.gun.activate();
+    this.currentWeapon = this.gun;
     this.createHud();
+    addCursor();
 };
 
 Player.prototype.initCamera = function(scene) {
@@ -40,7 +45,26 @@ Player.prototype.initfpsControls = function(scene) {
             canvas.requestPointerLock();
             _this.gun.registerGunMovement();
         }
+        _this.currentWeapon.shoot();
     }, false);
+
+    // Switch weapons
+    window.addEventListener("keydown", function(evt) {
+        if (evt.keyCode == 49) { // "1", switch to gun
+            if (!_this.gun.active) {
+                _this.currentWeapon.deactivate();
+                _this.gun.activate();
+                _this.currentWeapon = _this.gun;
+            }
+        }
+        if (evt.keyCode == 50) { // "2", switch to rocket
+            if (!_this.rocket.active) {
+                _this.currentWeapon.deactivate();
+                _this.rocket.activate();
+                _this.currentWeapon = _this.rocket;
+            }
+        }
+    });
 
     // Event listener when the pointerlock is updated (or removed by pressing ESC for example).
     var pointerlockchange = function (event) {
@@ -74,6 +98,7 @@ Player.prototype.createHud = function() {
         'right': 1,
         'margin': 'auto',
         'padding': 0,
+        'z-index': 2,
         'background-color': 'black',
     });
     $('#container').append(hud);
