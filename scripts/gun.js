@@ -2,6 +2,7 @@ function Gun(name, size, scene) {
     this.name = name;
     this.size = size;
     this.scene = scene;
+    this.active = true;
 
     // Variables for moving the gun
     this.gunMovementX = 0;
@@ -18,19 +19,7 @@ function Gun(name, size, scene) {
     this.impactSpriteManager = new BABYLON.SpriteManager("impactManager", "img/impact.png", 2000, 800, this.scene);
 
     var _this = this;
-    var image = "img/weapons/" + _this.name + "_" + _this.index + ".png";
 
-    var gun = $('<img id="gun", src="' + image + '"/>');
-    gun.css({
-        'position': 'absolute',
-        'left': 0,
-        'right': 0,
-        'bottom': '15%',
-        'margin': 'auto',
-        'padding': 0,
-        'width': '20%',
-    });
-    $('#container').append(gun);
 
     var cursor= $('<img id="cursor", src="img/weapons/cursor.png"/>');
     cursor.css({
@@ -46,6 +35,9 @@ function Gun(name, size, scene) {
 
     var _this = this;
     $("#canvas").click(function () {
+        if (!_this.active) {
+            return;
+        }
         if (!_this.shooting) {
             _this.shooting = true;
             _this.shoot();
@@ -69,6 +61,26 @@ Gun.prototype.shoot = function(){
     }
 }
 
+Gun.prototype.deactivate = function() {
+    this.active = false;
+    $("#gun").remove();
+}
+
+Gun.prototype.activate = function() {
+    this.active = true;
+    var image = "img/weapons/" + this.name + "_" + this.index + ".png";
+    var gun = $('<img id="gun", src="' + image + '"/>');
+    gun.css({
+        'position': 'absolute',
+        'left': 0,
+        'right': 0,
+        'bottom': '15%',
+        'margin': 'auto',
+        'padding': 0,
+        'width': '20%',
+    });
+    $('#container').append(gun);
+}
 Gun.prototype.updateFrame = function(){
     this.index += this.animation_direction;
     if (this.index == this.size - 1){
