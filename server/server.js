@@ -1,38 +1,37 @@
-
-// var server = require('http').Server(app);
 var express = require('express');
 var server = express();
 var httpServer = require('http').Server(server);
 var io = require('socket.io')(httpServer);
 
+SERVER_UPDATE_INTERVAL = 50;
+
+var clientSockets = [];
+var gameState = {};
+
 server.use(express.static(__dirname + '/../'));
 httpServer.listen(8000);
 
 var socketRoomMap = {};
-var roomList = [];
+var roomState = {};
 
 io.on('connection', function (socket) {
-  // socket.emit('news', { hello: 'world' });
   socket.on('room', function (data) {
-    socket.join(data['room']);
-    socketRoomMap[socket.id] = data['room'];
-    // if new room
-    // setInterval
+    var roomId = data['room'];
+    socket.join(roomId);
+    socketRoomMap[socket.id] = roomId;
+
+    if (!roomState[roomId]) {
+      // if it is a new room
+      roomState[roomId] = {};
+      setInterval(function() {
+        io.to(roomId).emit('serverUpdate', roomState[roomId]):
+      }, SERVER_UPDATE_INTERVAL);
+    }
   });
 
   socket.on('clientUpdate', function (data) {
-    socket.broadcast.to(socketRoomMap[socket.id]).emit('serverUpdate', data);
+      var gameState = roomState[socketRoomMap[socket.id]];
+      gameState[socket.id] = data;
   });
+
 });
-// serve
-//
-// app.get('/', function (req, res) {
-//   res.sendfile('../index.html');
-// });
-//
-// io.on('connection', function (socket) {
-//   socket.emit('news', { hello: 'world' });
-//   socket.on('my other event', function (data) {
-//     console.log(data);
-//   });
-// });

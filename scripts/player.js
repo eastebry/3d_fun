@@ -13,6 +13,7 @@ Player.prototype.initCamera = function(scene) {
     freeCamera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
     scene.activeCamera.attachControl(canvas);
     this.initfpsControls(scene);
+    this.camera = freeCamera
 };
 
 Player.prototype.initfpsControls = function(scene) {
