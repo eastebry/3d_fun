@@ -77,4 +77,3 @@ Player.prototype.createHud = function() {
     });
     $('#container').append(hud);
 };
-

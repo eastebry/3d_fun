@@ -13,6 +13,7 @@ function createScene(engine) {
     var MCOUNT = 33;
 
     // createLevel(scene);
+    BABYLON.SceneLoader.ImportMesh("","","assets/level1.babylon", scene)
     localPlayer = new Player(scene);
     createGround(scene, 100, 100);
     createSkybox(scene);
