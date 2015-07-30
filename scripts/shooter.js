@@ -63,6 +63,7 @@ function createGround(scene, w, h){
 
 function createSkybox(scene) {
     var skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
+    skybox.infiniteDistance = true;
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
