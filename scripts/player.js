@@ -29,7 +29,7 @@ Player.prototype.initfpsControls = function(scene) {
         c.keysRight = [68]; // d
         c.inertia = 0;
         c.angularSensibility = 1200;
-        c.speed = 2;
+        c.speed = 20;
     }
     var canvas = scene.getEngine().getRenderingCanvas();
     // On click event, request pointer lock
