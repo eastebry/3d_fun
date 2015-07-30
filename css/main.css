@@ -13,3 +13,11 @@ html, body, #canvas {
 body {
     background-color: #111111;
 }
+
+#gunsight {
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-top:-37px;
+    margin-left:-37px;
+}
