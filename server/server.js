@@ -35,3 +35,15 @@ io.on('connection', function (socket) {
   });
 
 });
+// serve
+//
+// app.get('/', function (req, res) {
+//   res.sendfile('../index.html');
+// });
+//
+// io.on('connection', function (socket) {
+//   socket.emit('news', { hello: 'world' });
+//   socket.on('my other event', function (data) {
+//     console.log(data);
+//   });
+// });
