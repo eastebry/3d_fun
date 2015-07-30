@@ -38,6 +38,7 @@ Player.prototype.initfpsControls = function(scene) {
         canvas.requestPointerLock = canvas.requestPointerLock || canvas.msRequestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
         if (canvas.requestPointerLock) {
             canvas.requestPointerLock();
+            _this.gun.registerGunMovement();
         }
     }, false);
 
