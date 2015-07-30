@@ -12,7 +12,7 @@ function createScene(engine) {
     scene.collisionsEnabled = true;
     var MCOUNT = 33;
 
-    createLevel(scene);
+    // createLevel(scene);
     localPlayer = new Player(scene);
     createGround(scene, 100, 100);
     createSkybox(scene);
