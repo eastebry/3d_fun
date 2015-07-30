@@ -15,7 +15,7 @@ function createScene(engine) {
     // createLevel(scene);
     BABYLON.SceneLoader.ImportMesh("","","assets/level1.babylon", scene)
     localPlayer = new Player(scene);
-    createGround(scene, 100, 100);
+    createGround(scene, 1000, 1000);
     createSkybox(scene);
     createLights(scene);
     createBox(scene, 10,10,10);
