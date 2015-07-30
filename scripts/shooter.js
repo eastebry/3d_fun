@@ -15,17 +15,17 @@ function createScene(engine) {
     // createLevel(scene);
     BABYLON.SceneLoader.ImportMesh("","","assets/level1.babylon", scene)
     localPlayer = new Player(scene);
-    createGround(scene, 100, 100);
+    createGround(scene, 1000, 1000);
     createSkybox(scene);
     createLights(scene);
     createBox(scene, 10,10,10);
 
     // Make some zombies
-    var zombies = []
-    for (var i = 0;i<3;i++) {
-        zombies.push(new Zombie(scene));
-    }
-    scene.zombies = zombies;
+    // var zombies = []
+    // for (var i = 0;i<3;i++) {
+    //     zombies.push(new Zombie(scene));
+    // }
+    // scene.zombies = zombies;
     return scene;
 }
 
@@ -115,9 +115,14 @@ window.onload = function () {
             scene.render();
 
             // Update zombies
-            scene.zombies.map(function(that) {
-                that.update();
-            });
+            for (var key in scene.zombies) {
+                scene.zombies[key].update();
+            }
+            // if (scene.zombies) {
+            //     scene.zombies.map(function(that) {
+            //         that.update();
+            //     });
+            // }
         });
     }
 };

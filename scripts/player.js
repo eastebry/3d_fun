@@ -10,11 +10,11 @@ function Player(scene) {
 };
 
 Player.prototype.initCamera = function(scene) {
-    var freeCamera = new BABYLON.FreeCamera("free", new BABYLON.Vector3(0, 1, 0), scene);
+    var freeCamera = new BABYLON.FreeCamera("free", new BABYLON.Vector3(15, 3, 0), scene);
     freeCamera.minZ = 1;
     freeCamera.checkCollisions = true;
     freeCamera.applyGravity = true;
-    freeCamera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
+    freeCamera.ellipsoid = new BABYLON.Vector3(1, 2, 1);
     scene.activeCamera.attachControl(canvas);
     this.initfpsControls(scene);
     this.camera = freeCamera

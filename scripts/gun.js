@@ -15,6 +15,8 @@ function Gun(name, size, scene) {
     this.animation_speed = 100;
     this.shooting = false;
 
+    this.impactSpriteManager = new BABYLON.SpriteManager("impactManager", "img/impact.png", 2000, 800, this.scene);
+
     var _this = this;
 }
 

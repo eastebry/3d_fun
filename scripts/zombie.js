@@ -22,7 +22,7 @@ Zombie.prototype.createZombie = function(scene) {
 };
 
 Zombie.prototype.doMovement = function() {
-    var movedRatio = (new Date().getTime() - this.startTime) / (this.endTime - this.startTime); 
+    var movedRatio = (new Date().getTime() - this.startTime) / (this.endTime - this.startTime);
     if (movedRatio < 1) {
         this.isMoving = true;
         var newPos = new BABYLON.Vector3.Lerp(this.originalPos, this.nextPos, movedRatio);
@@ -48,12 +48,12 @@ Zombie.prototype.update = function() {
     this.zmesh.lookAt(this.scene.activeCamera.position);
 
     // Set a new destination and then sleep a random amount of time
-    if (!this.isMoving) {
-        if (new Date().getTime() > this.sleepUntil) {
-            var nextPos = new BABYLON.Vector3(Math.random()*50-25, 2.5, Math.random()*50-25);
-            this.setDestination(nextPos);
-            this.sleepUntil = new Date().getTime() + Math.random()*5000;
-        }
-    }
+    // if (!this.isMoving) {
+    //     if (new Date().getTime() > this.sleepUntil) {
+    //         var nextPos = new BABYLON.Vector3(Math.random()*50-25, 2.5, Math.random()*50-25);
+    //         this.setDestination(nextPos);
+    //         this.sleepUntil = new Date().getTime() + Math.random()*5000;
+    //     }
+    // }
     this.doMovement();
 }

@@ -12,6 +12,7 @@ var socketRoomMap = {};
 var roomState = {};
 
 io.on('connection', function(socket) {
+    socket.emit('myId', socket.id);
 
     socket.on('room', function(data) {
         var roomId = data['room'];
@@ -34,8 +35,11 @@ io.on('connection', function(socket) {
     });
 
     socket.on('disconnect', function() {
+        console.log("delete a player");
         var gameState = roomState[socketRoomMap[socket.id]];
-        delete gameState[socket.id];
-        delete socketRoomMap[socket.id];
+        if (gameState) {
+            delete gameState[socket.id];
+            delete socketRoomMap[socket.id];
+        }
     })
 })
