@@ -1,7 +1,6 @@
 var CLIENT_UPDATE_INTERVAL = 30;
 var mySocketId;
 var opponents = {};
-
 var socket = io.connect('http://localhost:8000');
 var roomId = 'default';
 if (getQueryStrings()['room']) {
@@ -14,7 +13,10 @@ socket.on('myId', function(data) {
 })
 
 socket.on('serverUpdate', function(data) {
-    console.log(data);
+    // console.log(data);
+    if (!scene.zombies) {
+        scene.zombies = opponents;
+    }
     for (var playerId in data) {
         var state = data[playerId];
         if (playerId === mySocketId) {
@@ -27,13 +29,20 @@ socket.on('serverUpdate', function(data) {
                 if (!scene.zombies) {
                     scene.zombies = [];
                 }
-                scene.zombies.push(zombie);
                 opponents[playerId] = zombie;
             }
 
             zombie.zmesh.position.x = state.position[0];
-            zombie.zmesh.position.x = state.position[1];
-            zombie.zmesh.position.x = state.position[2];
+            zombie.zmesh.position.y = state.position[1];
+            zombie.zmesh.position.z = state.position[2];
+        }
+    }
+
+    for (var existingPlayerId in opponents) {
+        if (!data[existingPlayerId]) {
+            // disconnected player
+            opponents[existingPlayerId].zmesh.dispose();
+            delete opponents[existingPlayerId];
         }
     }
 })

@@ -115,11 +115,14 @@ window.onload = function () {
             scene.render();
 
             // Update zombies
-            if (scene.zombies) {
-                scene.zombies.map(function(that) {
-                    that.update();
-                });
+            for (var key in scene.zombies) {
+                scene.zombies[key].update();
             }
+            // if (scene.zombies) {
+            //     scene.zombies.map(function(that) {
+            //         that.update();
+            //     });
+            // }
         });
     }
 };
