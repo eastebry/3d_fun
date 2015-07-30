@@ -1,4 +1,4 @@
-CLIENT_UPDATE_INTERVAL = 30;
+var CLIENT_UPDATE_INTERVAL = 30;
 
 var socket = io.connect('http://localhost:8000');
 var roomId = 'default';
