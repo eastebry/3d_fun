@@ -1,5 +1,3 @@
-
-
 function Zombie(scene) {
     this.scene = scene;
     this.createZombie(scene);

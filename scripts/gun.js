@@ -40,11 +40,12 @@ function Gun(name, size, scene) {
     var cursor= $('<img id="cursor", src="img/weapons/cursor.png"/>');
     cursor.css({
         'position': 'absolute',
-        'left': 0,
+        'top': '50%',
+        'left': '50%',
+        'margin-top': '-37px',
+        'margin-left': '-37px',
         'right': 0,
-        'bottom': '45%',
         'padding': 0,
-        'width': '5%',
     });
     $('#container').append(cursor);
 
@@ -76,39 +77,4 @@ Gun.prototype.updateFrame = function(){
     if (this.shooting){
         setTimeout(function(){_this.updateFrame()}, this.animation_speed);
     }
-}
-
-Gun.prototype.registerGunMovement = function(){
-    var _this = this;
-    //TODO - too lazy to convert the moveGun method to use jquery events
-    document.getElementById('canvas').addEventListener('mousemove', function(evt){
-        _this.moveGun(evt);
-    });
-}
-
-Gun.prototype.moveGun = function(e) {
-    this.gunMovementX += e.movementX;
-    this.gunMovementY += e.movementY;
-    if (this.gunMovementX <  -1 * this.maxGunMovementX) this.gunMovementX = -1 * this.maxGunMovementX;
-    if (this.gunMovementX > this.maxGunMovementX) this.gunMovementX = this.maxGunMovementX;
-    if (this.gunMovementY <  -1 * this.maxGunMovementY) this.gunMovementY = -1 * this.maxGunMovementY;
-    if (this.gunMovementY > this.maxGunMovementY) this.gunMovementY = this.maxGunMovementY;
-
-    var mouseX = this.gunMovementX;
-    var mouseY = this.gunMovementY;
-    var totalX = $('#canvas').width();
-    var totalY = $('#canvas').height();
-    var centerX = totalX / 2;
-    var centerY = totalY / 2;
-    var shiftX = centerX - mouseX;
-    var shiftY = centerY - mouseY;
-
-    /// TODO actually compute this
-    var startX = -100;
-    var startY = 100;
-    var posX = startX - (shiftX/10);
-    var posY = startY + (shiftY/10);
-
-    $('#gun').css({ 'left': posX + 'px', 'bottom': posY + 'px' });
-    $('#cursor').css({ 'left': centerX - 25 + 'px', 'bottom': centerY - 25 + 'px' });
 }
