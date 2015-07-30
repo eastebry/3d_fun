@@ -12,6 +12,7 @@ var socketRoomMap = {};
 var roomState = {};
 
 io.on('connection', function(socket) {
+    socket.emit('myId', socket.id);
 
     socket.on('room', function(data) {
         var roomId = data['room'];
