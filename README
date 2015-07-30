@@ -1,1 +1,9 @@
 Playing around with babylonjs
+
+To start:
+
+python3 -m http.server
+
+or with python2.7:
+
+python -m SimpleHTTPServer
