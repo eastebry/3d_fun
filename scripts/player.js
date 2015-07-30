@@ -7,6 +7,7 @@ function Player(scene) {
     this.gun.activate();
     this.currentWeapon = this.gun;
     this.createHud();
+    addCursor();
 };
 
 Player.prototype.initCamera = function(scene) {
@@ -97,6 +98,7 @@ Player.prototype.createHud = function() {
         'right': 1,
         'margin': 'auto',
         'padding': 0,
+        'z-index': 2,
         'background-color': 'black',
     });
     $('#container').append(hud);

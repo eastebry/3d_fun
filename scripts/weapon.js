@@ -19,6 +19,11 @@ function Weapon(name, size, scene) {
     var _this = this;
 
 
+
+
+}
+
+function addCursor() {
     var cursor= $('<img id="cursor", src="img/weapons/cursor.png"/>');
     cursor.css({
         'position': 'absolute',
@@ -30,15 +35,29 @@ function Weapon(name, size, scene) {
         'padding': 0,
     });
     $('#container').append(cursor);
+}
 
-
+Weapon.prototype.getPick = function() { 
+    var canvas = $('#canvas');
+    var x =  canvas.width()/2;
+    var y = canvas.height()/2;
+    var pickResult  = this.scene.pick(x, y, null, false, scene.activeCamera);
+    if (pickResult.hit) {
+        console.log(pickResult);
+        return pickResult;
+        // TODO - create an impact sprite, this method looks pretty bad
+        //var newsprite = new BABYLON.Sprite("impact", this.impactSpriteManager);
+        //newsprite.position = pickResult.pickedPoint;
+    }
+    return null;
 }
 
 Weapon.prototype.shoot = function() {
     if (!this.active) {
         return;
     }
-   this.fire();
+    var pickRes = this.getPick();
+    this.fire();
 }
 
 Weapon.prototype.deactivate = function() {
@@ -58,6 +77,7 @@ Weapon.prototype.activate = function() {
         'margin': 'auto',
         'padding': 0,
         'width': '20%',
+        'z-index': 1,
     });
     $('#container').append(gun);
 }
