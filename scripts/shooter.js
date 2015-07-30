@@ -98,15 +98,6 @@ window.onload = function () {
             engine.resize();
         });
 
-        canvas.addEventListener("mousedown", function (evt) {
-            var pickResult = scene.pick(evt.clientX, evt.clientY);
-            if (pickResult.hit) {
-                var dir = pickResult.pickedPoint.subtract(scene.activeCamera.position);
-                dir.normalize();
-                pickResult.pickedMesh.applyImpulse(dir.scale(50), pickResult.pickedPoint);
-            }
-        });
-
         scene = createScene(engine);
         // Enable keyboard/mouse controls on the scene (FPS like mode)
 
