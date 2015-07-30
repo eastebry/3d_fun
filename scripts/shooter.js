@@ -12,6 +12,8 @@ function createScene(engine) {
     scene.collisionsEnabled = true;
     var MCOUNT = 33;
 
+    // createLevel(scene);
+    BABYLON.SceneLoader.ImportMesh("","","assets/level1.babylon", scene)
     localPlayer = new Player(scene);
     createGround(scene, 100, 100);
     createSkybox(scene);
@@ -80,6 +82,7 @@ function createLights(scene){
     light1.diffuse = new BABYLON.Color3(1, 0.7333333333333333, 0.3568627450980392);
     light1.intensity = 0.2;
 }
+
 
 
 
