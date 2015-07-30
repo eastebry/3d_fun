@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-function Zombie(scene) {
-    this.scene = scene;
-    this.createZombie(scene);
-=======
-
-
 function Zombie(scene) {
     this.scene = scene;
     this.createZombie(scene);
     this.nextPos = null;
     this.sleepUntil = 0;
->>>>>>> c5e57f8663d3e9cfc8873b430d61d93016b08b5b
 };
 
 Zombie.prototype.createZombie = function(scene) {
@@ -28,9 +20,6 @@ Zombie.prototype.createZombie = function(scene) {
 };
 
 Zombie.prototype.update = function() {
-<<<<<<< HEAD
-    this.zmesh.lookAt(this.scene.activeCamera.position);
-=======
     var speed = 2;
     this.zmesh.lookAt(this.scene.activeCamera.position);
     if (this.sleepUntil != null && new Date().getTime() > this.sleepUntil) {
@@ -54,5 +43,4 @@ Zombie.prototype.update = function() {
         }
     }
 
->>>>>>> c5e57f8663d3e9cfc8873b430d61d93016b08b5b
 }
