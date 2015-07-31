@@ -1,10 +1,10 @@
-
 function Marine(scene, pos) { 
     if (!Marine.spritemanager) Marine.init(scene);
+    this.name = "player";
     this.state = 'walk';
     this.scene = scene;
-    this.text = new TextBlock(scene, "player", pos);
-    this.text.mesh.setEnabled(false);
+    this.text = new TextBlock(scene, this.name, pos);
+    this.text.mesh.setEnabled(true);
     this.sprite = new BABYLON.Sprite('marine', Marine.spritemanager);
     this.sprite.size = 7;
     this.sprite.position.copyFrom(pos);
@@ -27,8 +27,6 @@ function Marine(scene, pos) {
         if (!this._animationStarted)
             return;
 
-	that.text.mesh.position.copyFrom(that.sprite.position);
-	
         this._time += deltaTime;
         if (this._time <= this._delay) return;
         else this._time %= this._delay;
@@ -64,6 +62,8 @@ function Marine(scene, pos) {
 Marine.prototype.setPosition = function(position) {
     this.sprite.position.copyFrom(position);
     this.hitbox.position.copyFrom(position);
+    this.text.mesh.position.copyFrom(position);
+    this.text.mesh.position.addInPlace(new BABYLON.Vector3(0, 2.5, 0));
 }
 Marine.prototype.setRotation = function(rotation) {
     this.rotation = rotation;
@@ -114,6 +114,9 @@ Marine.prototype.shoot = function(i) {
     this.animate([4,5], i);
 };
 
+Marine.prototype.setName = function(name) {
+    this.text.setText(name);
+}
 Marine.init = function(scene) { 
     Marine.spritemanager = new BABYLON.SpriteManager('marinesManager', '../assets/marine.png', 2000, 64, scene);
 };

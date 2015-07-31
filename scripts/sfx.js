@@ -5,9 +5,9 @@ function BloodSpatter(scene, emitter, target) {
 	console.log('target', target);
 	emitter.position.copyFrom(target);
 	emitter.setEnabled(true);
-	// setTimeout(function(){ emitter.dispose();}, 5010);
+	setTimeout(function(){ emitter.dispose();}, 5010);
     }
-    
+
     // Create a particle system
     this.particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
 
@@ -77,5 +77,6 @@ function Sparks(scene, point) {
     this.particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 1.0);
     this.particleSystem.minEmitPower = 10;
     this.particleSystem.maxEmitPower = 20;
+    setTimeout(function() { emitter.dispose() }, 3000);
 }
 Sparks.prototype = BloodSpatter.prototype;

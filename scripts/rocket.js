@@ -95,10 +95,12 @@ function explosionDamage(position, radius, damage) {
             var multiplier = distance / radius;
             var damage = damage * multiplier;
             var hit_data = {
-               damage: damage,
-               playerId: mySocketId,
-               id: opponent,
-               weapon: 'rocket',
+		damage: damage,
+		playerId: mySocketId,
+		id: opponent,
+		weapon: 'rocket',
+		source: localPlayer.camera.position,
+		dest: position
             }
             socket.emit('hit', hit_data);
         }
