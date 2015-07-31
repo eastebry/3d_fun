@@ -17,10 +17,6 @@ function Weapon(name, size, scene) {
     this.shooting = false;
 
     var _this = this;
-
-
-
-
 }
 
 function addCursor() {

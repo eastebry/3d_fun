@@ -24,6 +24,11 @@ socket.on('health', function(data) {
     }
 })
 
+socket.on('message', function(message){
+    console.log("message");
+    $("#messages").append(message + "\n");
+})
+
 socket.on('playerDown', function(data) {
     // opponents[data].fall();
 })
