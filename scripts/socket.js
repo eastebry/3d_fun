@@ -26,7 +26,6 @@ if (getQueryStrings()['room']) {
     roomId = getQueryStrings()['room'];
 }
 socket.emit('room', {room: roomId});
-
 socket.on('myId', function(data) {
     mySocketId = data;
 })
@@ -64,7 +63,6 @@ socket.on('pistolhit', function(event) {
 });
 
 socket.on('serverUpdate', function(data) {
-    // console.log(data);
     if (!scene.zombies) {
         scene.zombies = opponents;
     }
@@ -106,6 +104,7 @@ socket.on('serverUpdate', function(data) {
         if (!data[existingPlayerId]) {
             // disconnected player
             opponents[existingPlayerId].sprite.dispose();
+            opponents[existingPlayerId].hitbox.dispose();
             delete opponents[existingPlayerId];
         }
     }

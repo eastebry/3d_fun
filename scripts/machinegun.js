@@ -12,7 +12,7 @@ function Machinegun(name, size, scene) {
     // variables for animating
     this.index = 0;
     this.animation_direction = 1; //1 = up, -1 = down
-    this.animation_speed = 100;
+    this.animation_speed = 50;
     this.shooting = false;
 
     this.impactSpriteManager = new BABYLON.SpriteManager("impactManager", "img/impact.png", 2000, 800, this.scene);
@@ -22,31 +22,17 @@ function Machinegun(name, size, scene) {
 
 inheritsFrom(Machinegun, Weapon);
 
-Machinegun.prototype.updateFrame = function(){
-    if (!this.active) {
-        this.shooting = false;
-        return;
-    }
-    this.index += this.animation_direction;
-    if (this.index == this.size - 1){
-        this.animation_direction = -1;
-        this.index -= 1;
-    }
-    if (this.index == 0 && this.animation_direction == -1){
-        // stop this animation
-        this.shooting = false;
-        this.animation_direction = 1;
-    }
+Machinegun.prototype.shootFrame = function(index){
+    this.index = index;
     var name  = "img/weapons/" + this.name + "_" + this.index+ ".png";
     $('#weapon').attr("src", name);
-    $("#weapon").css("width", "40%");
     var _this = this;
-    if (this.shooting){
-        setTimeout(function(){_this.updateFrame()}, this.animation_speed);
+    if (index == 1) {
+        setTimeout(function(){_this.shootFrame(0)}, this.animation_speed);
     }
 }
 
-Machinegun.prototype.registerMachinegunMovement = function(){
+Machinegun.prototype.registerGunMovement = function(){
     var _this = this;
     //TODO - too lazy to convert the moveMachinegun method to use jquery events
     document.getElementById('canvas').addEventListener('mousemove', function(evt){
@@ -78,8 +64,11 @@ Machinegun.prototype.moveMachinegun = function(e) {
     var startY = 100;
     var posX = startX - (shiftX/10);
     var posY = startY + (shiftY/10);
+    posX += 125;
+    posX = posX / 20;
+    var left = 20 + Math.max(-8, Math.min(8, posX));
 
-    $('#weapon').css({ 'left': posX + 'px', 'bottom': posY + 'px' });
+    $('#weapon').css({ 'left': left + '%', 'bottom': posY + 'px' });
 };
 
 function showSparks(scene, source, dest, playerid) {
@@ -104,6 +93,7 @@ Machinegun.prototype.stop_fire = function() {
 
 Machinegun.prototype.firebullet = function() {
 	// send the hit event to server to reduce player's health
+    this.shootFrame(1);
 	var pickResult = this.getPick();
 	if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
 	    new BloodSpatter(this.scene, pickResult.pickedMesh);

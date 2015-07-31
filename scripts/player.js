@@ -1,7 +1,7 @@
 function Player(scene, position) {
     this.scene = scene;
     this.initCamera(scene, position);
-    this.guns = [new Gun('pistol', 4, scene), new Rocket('rocket', 4, scene), new Machinegun('machinegun', 4, scene)];
+    this.guns = [new Gun('pistol', 4, scene), new Rocket('rocket', 4, scene), new Machinegun('machinegun', 2, scene)];
     this.gun_index = 0;
     for (var i = 1; i < this.guns.length; i++){
         this.guns[i].deactivate()
@@ -78,6 +78,7 @@ Player.prototype.initfpsControls = function(scene) {
                     _this.guns[_this.gun_index].deactivate();
                     _this.gun_index = index;
                     _this.guns[_this.gun_index].activate();
+                    _this.guns[_this.gun_index].registerGunMovement();
                 }
             }
         }
