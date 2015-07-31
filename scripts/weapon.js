@@ -43,16 +43,6 @@ Weapon.prototype.getPick = function() {
     var y = canvas.height()/2;
     var pickResult  = this.scene.pick(x, y, null, false, scene.activeCamera);
     if (pickResult.hit) {
-        // console.log(pickResult);
-        // send the hit event to server to reduce player's health
-        if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
-            console.log(pickResult);
-            new BloodSpatter(this.scene, pickResult.pickedMesh);
-            socket.emit('hit', {
-                id: pickResult.pickedMesh.playerId,
-                weapon: 'pistol'
-            });
-        }
         return pickResult;
     }
     return null;

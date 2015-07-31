@@ -21,7 +21,7 @@ function BloodSpatter(scene, emitter) {
 
     // Life time of each particle (random between...
     particleSystem.minLifeTime = 0.3;
-    particleSystem.maxLifeTime = 1.5;
+    particleSystem.maxLifeTime = 1.0;
 
     // Emission rate
     particleSystem.emitRate = 30000;
@@ -30,7 +30,7 @@ function BloodSpatter(scene, emitter) {
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
     // Set the gravity of all particles
-    particleSystem.gravity = new BABYLON.Vector3(10, 10, 10);
+    particleSystem.gravity = new BABYLON.Vector3(0, -100, 0);
 
     // Direction of each particle after it has been emitted
     particleSystem.direction1 = new BABYLON.Vector3(0, 0, 0);
@@ -42,7 +42,7 @@ function BloodSpatter(scene, emitter) {
 
     // Speed
     particleSystem.minEmitPower = 1;
-    particleSystem.maxEmitPower = 10;
+    particleSystem.maxEmitPower = 4;
     particleSystem.updateSpeed = 0.005;
 
     // Start the particle system
