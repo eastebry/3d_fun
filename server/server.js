@@ -16,10 +16,7 @@ io.on('connection', function(socket) {
     socket.emit('myId', socket.id);
 
     socket.on('message', function(data){
-        console.log(data);
-        for (player in socketRoomMap) {
-            io.to(socketRoomMap[player]).emit('message', data['message']);
-        }
+        io.to(socketRoomMap[data['playerId']]).emit('message', data['message']);
     });
 
     socket.on('room', function(data) {

@@ -144,7 +144,7 @@ Player.prototype.die = function() {
     if (!this.dead){
         socket.emit("message", {"playerId": mySocketId, "message": playerName + " was killed"});
         this.dead = true;
-	playSound('death');
+        playSound('death');
         var _this = this;
         this.guns[this.gun_index].deactivate();
         this.camera.applyGravity = false;
