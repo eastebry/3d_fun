@@ -6,6 +6,22 @@ var server =  "10.255.54.2:8000";
 server =  window.location.href;
 var socket = io.connect(server);
 var roomId = 'default';
+
+var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+};
+
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+        return entityMap[s];
+    });
+}
+
 if (getQueryStrings()['room']) {
     roomId = getQueryStrings()['room'];
 }
@@ -22,11 +38,10 @@ socket.on('health', function(data) {
     if (myHealth <= 0) {
         localPlayer.die()
     }
+    $("#health").text(myHealth+"%");
 })
-
 socket.on('message', function(message){
-    console.log("message");
-    $("#messages").append(message + "\n");
+    $("#messages").append(escapeHtml(message) + "\n");
 })
 
 socket.on('playerDown', function(data) {
@@ -39,6 +54,14 @@ socket.on('rocketLaunch', function(data) {
     var projectile = new RocketProjectile(scene, cam, pick);
     playSound('rocket', cam);
 })
+
+socket.on("pistolshot", function(event) {
+    showSparks(scene, event.source, event.dest, event.id);
+});
+
+socket.on('hit', function(data) {
+    showBlood(scene, event.source, event.target, event.id);
+});
 
 socket.on('serverUpdate', function(data) {
     // console.log(data);

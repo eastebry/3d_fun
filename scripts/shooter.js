@@ -26,18 +26,6 @@ function createScene(engine) {
     createSkybox(scene);
     createLights(scene);
 
-    // this needs to be moved out to script/marine.js somehow
-    /*function marineFactory(x,y,z,animation) {
-	var marine = new Marine(scene, new BABYLON.Vector3(x, y, z));
-	marine.sprite.size = 2;
-	marine[animation](0);
-    }
-    marineFactory(0, 3,-8, 'walk');
-    marineFactory(-3,3,-8, 'hurt');
-    marineFactory(-5,3, -3,'shoot');
-    marineFactory(-9,3, -4,'die');
-    */
-    //var inYoFace = new Marine(scene, pos.add(new BABYLON.Vector3(0, -2, 10)));
     var ryu = new Ryu(scene);
     scene.ryu = ryu;
     // Make some zombies

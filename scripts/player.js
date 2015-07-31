@@ -1,7 +1,7 @@
 function Player(scene, position) {
     this.scene = scene;
     this.initCamera(scene, position);
-    this.guns = [new Gun('pistol', 4, scene), new Rocket('rocket', 4, scene)];
+    this.guns = [new Gun('pistol', 4, scene), new Rocket('rocket', 4, scene), new Machinegun('machinegun', 4, scene)];
     this.gun_index = 0;
     for (var i = 1; i < this.guns.length; i++){
         this.guns[i].deactivate()
@@ -50,7 +50,7 @@ Player.prototype.initfpsControls = function(scene) {
     var canvas = scene.getEngine().getRenderingCanvas();
     // On click event, request pointer lock
     var _this = this;
-    canvas.addEventListener("click", function(evt) {
+    canvas.addEventListener("mousedown", function(evt) {
         canvas.requestPointerLock = canvas.requestPointerLock || canvas.msRequestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
         if (canvas.requestPointerLock) {
             canvas.requestPointerLock();
@@ -58,6 +58,10 @@ Player.prototype.initfpsControls = function(scene) {
         }
         _this.guns[_this.gun_index].shoot();
     }, false);
+
+    canvas.addEventListener("mouseup", function(evt) {
+        _this.guns[_this.gun_index].stop_fire();
+    });
 
     // Switch weapons
     window.addEventListener("keydown", function(evt) {
@@ -102,7 +106,7 @@ Player.prototype.initfpsControls = function(scene) {
 };
 
 Player.prototype.createHud = function() {
-    var hud = $('<img id="hud", src="img/hud.png"/>')
+    var hud = $('<img id="hud", src="img/hud-modified.png"/>')
     hud.css({
         'width': '100%',
         'position': 'absolute',
@@ -145,7 +149,7 @@ Player.prototype.die = function() {
     if (!this.dead){
         socket.emit("message", {"playerId": mySocketId, "message": playerName + " was killed"});
         this.dead = true;
-	playSound('death');
+        playSound('death');
         var _this = this;
         this.guns[this.gun_index].deactivate();
         this.camera.applyGravity = false;
@@ -205,7 +209,3 @@ Player.prototype.animateDieCamera = function() {
 
     scene.beginAnimation(this.camera, 0, 100, false);
 }
-
-
-
-

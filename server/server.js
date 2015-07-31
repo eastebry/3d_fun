@@ -16,12 +16,16 @@ io.on('connection', function(socket) {
     socket.emit('myId', socket.id);
 
     socket.on('message', function(data){
-        console.log(data);
-        for (player in socketRoomMap) {
-            io.to(socketRoomMap[player]).emit('message', data['message']);
-        }
+        io.to(socketRoomMap[data['playerId']]).emit('message', data['message']);
     });
 
+    socket.on('pistolshot', function(data){
+        console.log(data);
+        for (player in socketRoomMap) {
+            io.to(socketRoomMap[player]).emit('pistolshot', data);
+        }
+    });
+    
     socket.on('room', function(data) {
         var roomId = data['room'];
         socket.join(roomId);
@@ -56,6 +60,9 @@ io.on('connection', function(socket) {
         var damage = 0;
         if (data['weapon'] === 'pistol') {
             damage = 40;
+        }
+        else if (data['weapon'] === 'mg') {
+            damage = 20;
         }
         else if (data['weapon'] === 'rocket') {
             damage = data['damage'];

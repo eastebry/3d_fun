@@ -48,8 +48,25 @@ function BloodSpatter(scene, emitter) {
     // Start the particle system
     this.particleSystem.start();
     this.particleSystem.manualEmitCount = 30000;
+    this.particleSystem.disposeOnStop = true;
     var _this = this;
     setTimeout(function(){_this.particleSystem.stop();}, 2000);
-    setTimeout(function(){_this.particleSystem.dispose();}, 2200);
 }
 
+function Sparks(scene, point) {
+    var emitter = BABYLON.Mesh.CreateBox("emitter", 0.01, scene);
+    emitter.position.copyFrom(point);
+    emitter.setEnabled(true);
+    BloodSpatter.call(this, scene, emitter);
+    this.particleSystem.minSize = 0.01;
+    this.particleSystem.maxSize = 0.2;
+    this.particleSystem.manualEmitCount = 10000;
+    this.particleSystem.direction1 = new BABYLON.Vector3(1, 1, 1);
+    this.particleSystem.direction2 = new BABYLON.Vector3(-1, -1, -1);
+    this.particleSystem.color1 = new BABYLON.Color4(1, 1, 0, 1.0);
+    this.particleSystem.color2 = new BABYLON.Color4(1, 1, 0, 1.0);
+    this.particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 1.0);
+    this.particleSystem.minEmitPower = 10;
+    this.particleSystem.maxEmitPower = 20;
+}
+Sparks.prototype = BloodSpatter.prototype;
