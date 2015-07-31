@@ -80,6 +80,7 @@ socket.on('serverUpdate', function(data) {
             var marine = opponents[playerId];
             if (!marine) {
                 marine = new Marine(scene, newPos);
+		marine.setName(state.name || "[ Player ]");
                 if (!scene.marines) {
                     scene.marines = [];
                 }
@@ -140,7 +141,8 @@ setInterval(function() {
             camera.rotation.y,
             camera.rotation.z,
         ],
-        rockets: []
+        rockets: [],
+	name: playerName
     };
     socket.emit('clientUpdate', emit_data);
 }, CLIENT_UPDATE_INTERVAL);

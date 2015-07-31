@@ -83,6 +83,10 @@ Gun.prototype.moveGun = function(e) {
 
 function showBlood(scene,  source, dest, playerid) {
     console.log('showing blood!');
+    if (!dest || !dest.x) {
+	console.error('blood failed', dest);
+	return;
+    }
     new BloodSpatter(scene, null, dest);
     playSound('pistol', source);
     playSound('pain', dest);
