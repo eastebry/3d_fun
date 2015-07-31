@@ -10,6 +10,7 @@ httpServer.listen(8000);
 
 var socketRoomMap = {};
 var roomState = {};
+var roomHealthState = {};
 
 io.on('connection', function(socket) {
     socket.emit('myId', socket.id);
@@ -21,6 +22,7 @@ io.on('connection', function(socket) {
 
         if (!roomState[roomId]) {
             roomState[roomId] = {};
+            roomHealthState[roomId] = {};
             setInterval(function() {
                 io.to(roomId).emit('serverUpdate', roomState[roomId]);
             }, SERVER_UPDATE_INTERVAL);
@@ -32,6 +34,21 @@ io.on('connection', function(socket) {
         if (gameState) {
             gameState[socket.id] = data;
         }
+    });
+
+    socket.on('hit', function(data) {
+        var healthState = roomHealthState[socketRoomMap[socket.id]];
+        var damage = 0;
+        if (data['weapon'] === 'pistol') damage = 5;
+        else damage = 20;
+        if (healthState[data['id']]) {
+            healthState[data['id']] -= damage;
+        }
+        else {
+            healthState[data['id']] = 100;
+            healthState[data['id']] -= damage;
+        }
+        io.to(data['id']).emit('health', healthState[data['id']]);
     });
 
     socket.on('disconnect', function() {
