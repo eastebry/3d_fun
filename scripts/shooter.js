@@ -10,6 +10,8 @@ function createScene(engine) {
     var scene = new BABYLON.Scene(engine);
     scene.gravity = new BABYLON.Vector3(0, -1, 0);
     scene.collisionsEnabled = true;
+    var MCOUNT = 33;
+    scene.updateables = [];
 
     // createLevel(scene);
     BABYLON.SceneLoader.ImportMesh("","","assets/level1.babylon", scene)
@@ -122,6 +124,9 @@ window.onload = function () {
             for (var key in scene.zombies) {
                 scene.zombies[key].update();
             }
+            scene.updateables.forEach(function (that) {
+                that.update();
+            });
             // if (scene.zombies) {
             //     scene.zombies.map(function(that) {
             //         that.update();

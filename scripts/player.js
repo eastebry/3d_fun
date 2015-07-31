@@ -55,7 +55,7 @@ Player.prototype.initfpsControls = function(scene) {
             canvas.requestPointerLock();
             _this.guns[_this.gun_index].registerGunMovement();
         }
-        _this.currentWeapon.shoot();
+        _this.guns[_this.gun_index].shoot();
     }, false);
 
     // Switch weapons
