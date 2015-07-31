@@ -48,9 +48,9 @@ RocketProjectile.prototype.explode = function() {
     var spriteManagerExplosion = new BABYLON.SpriteManager('explosionManager', 'img/explosion-sprite.png', 2000, 64, scene);
     var explosion = new BABYLON.Sprite('explosion', spriteManagerExplosion);
     explosion.position = this.mesh.position.clone(); 
-    explosion.position.y += 8;
+    explosion.position.y += 3;
     explosion.playAnimation(0,25,true,35);
-    explosion.size = 64;
+    explosion.size = 16;
     setTimeout(function () {
         explosion.dispose();
     }, 35*25);
