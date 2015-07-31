@@ -1,4 +1,4 @@
 {
    "libs": [ "browser" ],
-   "loadEagerly": [ "scripts/*.js" ]
+   "loadEagerly": [ "scripts/*.js", "scripts/lib/*.js" ]
 }

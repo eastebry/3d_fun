@@ -45,7 +45,7 @@ Zombie.prototype.setDestination = function(nextPos) {
 
 Zombie.prototype.update = function() {
     // Always look at the camera
-    this.zmesh.lookAt(this.scene.activeCamera.position);
+    // this.zmesh.lookAt(this.scene.activeCamera.position);
 
     // Set a new destination and then sleep a random amount of time
     // if (!this.isMoving) {

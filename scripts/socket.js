@@ -1,5 +1,6 @@
 var CLIENT_UPDATE_INTERVAL = 30;
 var mySocketId;
+var myHealth = 100;
 var opponents = {};
 var socket = io.connect(window.location.origin);
 var roomId = 'default';
@@ -10,6 +11,12 @@ socket.emit('room', {room: roomId});
 
 socket.on('myId', function(data) {
     mySocketId = data;
+})
+
+socket.on('health', function(data) {
+    console.log("my current health " + data);
+    myHealth = data;
+    localPlayer.hit();
 })
 
 socket.on('serverUpdate', function(data) {
@@ -30,11 +37,16 @@ socket.on('serverUpdate', function(data) {
                     scene.zombies = [];
                 }
                 opponents[playerId] = zombie;
+                zombie.zmesh.playerId = playerId;
             }
 
             zombie.zmesh.position.x = state.position[0];
             zombie.zmesh.position.y = state.position[1];
             zombie.zmesh.position.z = state.position[2];
+
+            zombie.zmesh.rotation.x = state.rotation[0];
+            zombie.zmesh.rotation.y = state.rotation[1];
+            zombie.zmesh.rotation.z = state.rotation[2];
         }
     }
 
