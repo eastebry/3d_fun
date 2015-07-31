@@ -178,17 +178,17 @@ Player.prototype.animateDieCamera = function() {
         BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
         BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 
-    /*var keysPosition = [];
+    var keysPosition = [];
     keysPosition.push({
         frame: 0,
         value: this.camera.position
     });
     keysPosition.push({
-        frame: 50,
-        value: new BABYLON.Vector3(this.camera.position.x, this.camera.position.y - 2, this.camera.position.z),
+        frame: 25,
+        value: new BABYLON.Vector3(this.camera.position.x, this.camera.position.y - 4, this.camera.position.z),
     });
 
-    animCamPosition.setKeys(keysPosition);*/
+    animCamPosition.setKeys(keysPosition);
 
     var animCamRotation = new BABYLON.Animation("animCam", "rotation", 30,
         BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
@@ -205,7 +205,7 @@ Player.prototype.animateDieCamera = function() {
     });
 
     animCamRotation.setKeys(keysRotation);
-    //this.camera.animations.push(animCamPosition);
+    this.camera.animations.push(animCamPosition);
     this.camera.animations.push(animCamRotation);
 
     scene.beginAnimation(this.camera, 0, 100, false);
