@@ -17,18 +17,19 @@ Sound.prototype.play = function(data) {
 
     this.gain.gain.value = Math.pow(this.volume * (data.volume || 1), 2);
 
-    if (data.position) {
-    var p = localPlayer.camera.position;
-    var d = data.position;
-    var o = localPlayer.camera.rotation;
-    this.panner.setPosition(d.x, d.y, d.z);
-    this.context.listener.setOrientation(o.x, o.y, o.z, 0, -1, 0);
-    this.context.listener.setPosition(p.x, p.y, p.z);
-    }
-    else {
-	this.panner.setPosition(0, 0, 1);
-	this.context.listener.setOrientation(0, 0, 1, 0, 1, 0);
-	this.context.listener.setPosition(0, 0, 0);
+    this.panner.setPosition(0, 0, 1);
+    this.context.listener.setOrientation(0, 0, 1, 0, 1, 0);
+    this.context.listener.setPosition(0, 0, 0);
+    
+    while (data.position) {
+	var p = localPlayer.camera.position;
+	var d = data.position;
+	var o = localPlayer.camera.rotation;
+	if (p.subtract(d).length() < 1) break;
+	this.panner.setPosition(d.x, d.y, d.z);
+	this.context.listener.setOrientation(o.x, o.y, o.z, 0, -1, 0);
+	this.context.listener.setPosition(p.x, p.y, p.z);
+	break;
     }
     a.play();
 };
