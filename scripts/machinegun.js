@@ -105,6 +105,7 @@ Machinegun.prototype.firebullet = function() {
 	    });
 	}
 	else if (pickResult.pickedPoint) {
+	    new Sparks(this.scene, pickResult.pickedPoint);
 	    var event = {
 		id: pickResult.pickedMesh.playerId,
 		weapon: 'pistol',
