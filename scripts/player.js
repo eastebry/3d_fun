@@ -1,7 +1,7 @@
 function Player(scene, position) {
     this.scene = scene;
     this.initCamera(scene, position);
-    this.guns = [new Gun('pistol', 4, scene), new Rocket('rocket', 4, scene)];
+    this.guns = [new Gun('pistol', 4, scene), new Rocket('rocket', 4, scene), new Machinegun('machinegun', 4, scene)];
     this.gun_index = 0;
     for (var i = 1; i < this.guns.length; i++){
         this.guns[i].deactivate()
@@ -10,6 +10,7 @@ function Player(scene, position) {
     this.currentWeapon = this.guns[this.gun_index];
     this.createHud();
     this.dead = false;
+    this.camera.fov = 70 * Math.PI/180;
     addCursor();
 
     // we will use fog for an alpha splash when a character gets hit
@@ -49,7 +50,7 @@ Player.prototype.initfpsControls = function(scene) {
     var canvas = scene.getEngine().getRenderingCanvas();
     // On click event, request pointer lock
     var _this = this;
-    canvas.addEventListener("click", function(evt) {
+    canvas.addEventListener("mousedown", function(evt) {
         canvas.requestPointerLock = canvas.requestPointerLock || canvas.msRequestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
         if (canvas.requestPointerLock) {
             canvas.requestPointerLock();
@@ -57,6 +58,10 @@ Player.prototype.initfpsControls = function(scene) {
         }
         _this.guns[_this.gun_index].shoot();
     }, false);
+
+    canvas.addEventListener("mouseup", function(evt) {
+        _this.guns[_this.gun_index].stop_fire();
+    });
 
     // Switch weapons
     window.addEventListener("keydown", function(evt) {
@@ -172,7 +177,7 @@ Player.prototype.animateDieCamera = function() {
         BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
         BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 
-    var keysPosition = [];
+    /*var keysPosition = [];
     keysPosition.push({
         frame: 0,
         value: this.camera.position
@@ -182,7 +187,7 @@ Player.prototype.animateDieCamera = function() {
         value: new BABYLON.Vector3(this.camera.position.x, this.camera.position.y - 2, this.camera.position.z),
     });
 
-    animCamPosition.setKeys(keysPosition);
+    animCamPosition.setKeys(keysPosition);*/
 
     var animCamRotation = new BABYLON.Animation("animCam", "rotation", 30,
         BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
@@ -199,7 +204,7 @@ Player.prototype.animateDieCamera = function() {
     });
 
     animCamRotation.setKeys(keysRotation);
-    this.camera.animations.push(animCamPosition);
+    //this.camera.animations.push(animCamPosition);
     this.camera.animations.push(animCamRotation);
 
     scene.beginAnimation(this.camera, 0, 100, false);

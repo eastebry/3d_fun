@@ -139,9 +139,9 @@ window.onload = function () {
             scene.ryu.update();
 
             // Update zombies
-            for (var key in scene.zombies) {
+            /*for (var key in scene.zombies) {
                 scene.zombies[key].update();
-            }
+            }*/
             scene.updateables.forEach(function (that) {
                 that.update();
             });

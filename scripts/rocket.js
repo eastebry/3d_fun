@@ -89,7 +89,7 @@ RocketProjectile.prototype.explode = function() {
 
 function explosionDamage(position, radius, damage) {
     for (opponent in opponents) {
-        var distance = BABYLON.Vector3.Distance(position, opponents[opponent].zmesh.position);
+        var distance = BABYLON.Vector3.Distance(position, opponents[opponent].sprite.position);
         distance = Math.max(0, radius - distance);
         if (distance > 0) {
             var multiplier = distance / radius;
