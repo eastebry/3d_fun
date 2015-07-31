@@ -83,12 +83,12 @@ Gun.prototype.moveGun = function(e) {
 
 function showSparks(scene, source, dest, playerid) {
     new Sparks(scene, dest);
+    playSound('pistol', source);
 };
 
 Gun.prototype.fire = function() {
     if (!this.shooting) {
         this.shooting = true;
-        playSound('pistol');
         this.updateFrame();
 	// send the hit event to server to reduce player's health
 	var pickResult = this.getPick();
