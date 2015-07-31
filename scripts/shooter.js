@@ -42,6 +42,9 @@ function createScene(engine) {
     marineFactory(-5,3,5,2,4,12);
     marineFactory(-9,3,4,84,90);
 
+    var ryu = new Ryu(scene);
+    scene.ryu = ryu;
+
     // Make some zombies
     // var zombies = []
     // for (var i = 0;i<3;i++) {
@@ -133,6 +136,7 @@ window.onload = function () {
         //scene.registerBeforeRender(update);
         engine.runRenderLoop(function () {
             scene.render();
+            scene.ryu.update();
 
             // Update zombies
             for (var key in scene.zombies) {
