@@ -4,13 +4,12 @@
 
 var freeCamera, canvas, scene, localPlayer;
 var gunMovementX = 0, gunMovementY = 0;
-var MCOUNT = 33;
+var MCOUNT = 100;
 
 function createScene(engine) {
     var scene = new BABYLON.Scene(engine);
     scene.gravity = new BABYLON.Vector3(0, -10, 0);
     scene.collisionsEnabled = true;
-    var MCOUNT = 33;
 
     // createLevel(scene);
     BABYLON.SceneLoader.ImportMesh("","","assets/level1.babylon", scene)
@@ -42,9 +41,10 @@ function createBox(scene, x, y, z){
 
 function createGround(scene, w, h){
     var groundMaterial = new BABYLON.StandardMaterial("groundMat", scene);
-    groundMaterial.emissiveTexture = new BABYLON.Texture("textures/arroway.de_tiles-35_d100.jpg", scene);
-    groundMaterial.emissiveTexture.uScale = MCOUNT;
-    groundMaterial.emissiveTexture.vScale = MCOUNT;
+    groundMaterial.diffuseTexture = new BABYLON.Texture("textures/metalbridgebeam2.jpg", scene);
+    //groundMaterial.emissiveTexture = new BABYLON.Texture("textures/arroway.de_tiles-35_d100.jpg", scene);
+    groundMaterial.diffuseTexture.uScale = MCOUNT;
+    groundMaterial.diffuseTexture.vScale = MCOUNT;
     groundMaterial.bumpTexture = new BABYLON.Texture("textures/arroway.de_tiles-35_b010.jpg", scene);
     groundMaterial.bumpTexture.uScale = MCOUNT;
     groundMaterial.bumpTexture.vScale = MCOUNT;
@@ -74,14 +74,10 @@ function createSkybox(scene) {
 }
 
 function createLights(scene){
-    //At Last, add some lights to our scene
-    var light0 = new BABYLON.PointLight("pointlight0", new BABYLON.Vector3(28, 78, 385), scene);
-    light0.diffuse = new BABYLON.Color3(0.5137254901960784, 0.2117647058823529, 0.0941176470588235);
-    light0.intensity = 0.2;
-
-    var light1 = new BABYLON.PointLight("pointlight1", new BABYLON.Vector3(382, 96, 4), scene);
-    light1.diffuse = new BABYLON.Color3(1, 0.7333333333333333, 0.3568627450980392);
-    light1.intensity = 0.2;
+    var hemilight = new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), scene);
+    hemilight.diffuse = new BABYLON.Color3(1, 1, 1);
+    hemilight.specular = new BABYLON.Color3(0.5, 0.5, 0.5);
+    hemilight.groundColor = new BABYLON.Color3(0, 0, 0);
 }
 
 
