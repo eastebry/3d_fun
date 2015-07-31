@@ -40,7 +40,7 @@ io.on('connection', function(socket) {
         var healthState = roomHealthState[socketRoomMap[socket.id]];
         var damage = 0;
         if (data['weapon'] === 'pistol') {
-            damage = 5;
+            damage = 40;
         }
         else {
             damage = 20;

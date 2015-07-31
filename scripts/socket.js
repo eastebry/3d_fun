@@ -18,8 +18,8 @@ socket.on('health', function(data) {
     console.log("my current health " + data);
     myHealth = data;
     localPlayer.hit();
-    if (myHealth === 0) {
-        // lock the current player
+    if (myHealth <= 0) {
+        localPlayer.die()
     }
 })
 
