@@ -16,6 +16,7 @@ io.on('connection', function(socket) {
     socket.emit('myId', socket.id);
 
     socket.on('message', function(data){
+        console.log('global message: ' + data['message']);
         io.to(socketRoomMap[data['playerId']]).emit('message', data['message']);
     });
 

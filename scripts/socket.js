@@ -26,7 +26,6 @@ if (getQueryStrings()['room']) {
     roomId = getQueryStrings()['room'];
 }
 socket.emit('room', {room: roomId});
-
 socket.on('myId', function(data) {
     mySocketId = data;
 })
@@ -64,7 +63,6 @@ socket.on('hit', function(data) {
 });
 
 socket.on('serverUpdate', function(data) {
-    // console.log(data);
     if (!scene.zombies) {
         scene.zombies = opponents;
     }
