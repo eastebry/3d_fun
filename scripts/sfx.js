@@ -77,5 +77,6 @@ function Sparks(scene, point) {
     this.particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 1.0);
     this.particleSystem.minEmitPower = 10;
     this.particleSystem.maxEmitPower = 20;
+    setTimeout(function() { emitter.dispose() }, 3000);
 }
 Sparks.prototype = BloodSpatter.prototype;

@@ -99,7 +99,9 @@ Machinegun.prototype.firebullet = function() {
 	    new BloodSpatter(this.scene, pickResult.pickedMesh);
 	    socket.emit('hit', {
 		id: pickResult.pickedMesh.playerId,
-		weapon: 'pistol'
+		weapon: 'pistol',
+		source: localPlayer.camera.position,
+		dest: pickResult.pickedMesh.position
 	    });
 	}
 	else if (pickResult.pickedPoint) {
