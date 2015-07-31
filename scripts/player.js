@@ -149,7 +149,7 @@ Player.prototype.die = function() {
         this.animateDieCamera();
         this.camera.speed = 0;
         setTimeout(function () {_this.updateDieFog()}, 10);
-        // TODO - how do we prompt the player to restart?
+        setTimeout(function(){location.reload()}, 5000);
     }
 
 }
