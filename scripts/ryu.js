@@ -10,9 +10,9 @@ function Ryu(scene) {
     this.spriteManager = spriteManager;
 
     var ryu = new BABYLON.Sprite("ryu", spriteManager);
-    ryu.position.y = 2.5;
-    ryu.position.x = 1;
-    ryu.position.z = -50;
+    ryu.position.y = 11;
+    ryu.position.x = 9;
+    ryu.position.z = 177;
     ryu.size = 5;
 
     this.ryu = ryu;
