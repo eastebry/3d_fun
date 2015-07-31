@@ -1,13 +1,13 @@
-function Gun(name, size, scene) {
+function Machinegun(name, size, scene) {
     this.name = name;
     this.size = size;
     this.scene = scene;
     this.active = false;
     // Variables for moving the gun
     this.gunMovementX = 0;
-    this.maxGunMovementX = 1000;
+    this.maxMachinegunMovementX = 1000;
     this.gunMovementY = 0;
-    this.maxGunMovementY = 200;
+    this.maxMachinegunMovementY = 200;
 
     // variables for animating
     this.index = 0;
@@ -20,9 +20,9 @@ function Gun(name, size, scene) {
     var _this = this;
 }
 
-inheritsFrom(Gun, Weapon);
+inheritsFrom(Machinegun, Weapon);
 
-Gun.prototype.updateFrame = function(){
+Machinegun.prototype.updateFrame = function(){
     if (!this.active) {
         this.shooting = false;
         return;
@@ -45,23 +45,23 @@ Gun.prototype.updateFrame = function(){
     }
 }
 
-Gun.prototype.registerGunMovement = function(){
+Machinegun.prototype.registerMachinegunMovement = function(){
     var _this = this;
-    //TODO - too lazy to convert the moveGun method to use jquery events
+    //TODO - too lazy to convert the moveMachinegun method to use jquery events
     document.getElementById('canvas').addEventListener('mousemove', function(evt){
         if (_this.active) { 
-            _this.moveGun(evt);
+            _this.moveMachinegun(evt);
         }
     });
 }
 
-Gun.prototype.moveGun = function(e) {
+Machinegun.prototype.moveMachinegun = function(e) {
     this.gunMovementX += e.movementX;
     this.gunMovementY += e.movementY;
-    if (this.gunMovementX <  -1 * this.maxGunMovementX) this.gunMovementX = -1 * this.maxGunMovementX;
-    if (this.gunMovementX > this.maxGunMovementX) this.gunMovementX = this.maxGunMovementX;
-    if (this.gunMovementY <  -1 * this.maxGunMovementY) this.gunMovementY = -1 * this.maxGunMovementY;
-    if (this.gunMovementY > this.maxGunMovementY) this.gunMovementY = this.maxGunMovementY;
+    if (this.gunMovementX <  -1 * this.maxMachinegunMovementX) this.gunMovementX = -1 * this.maxMachinegunMovementX;
+    if (this.gunMovementX > this.maxMachinegunMovementX) this.gunMovementX = this.maxMachinegunMovementX;
+    if (this.gunMovementY <  -1 * this.maxMachinegunMovementY) this.gunMovementY = -1 * this.maxMachinegunMovementY;
+    if (this.gunMovementY > this.maxMachinegunMovementY) this.gunMovementY = this.maxMachinegunMovementY;
 
     var mouseX = this.gunMovementX;
     var mouseY = this.gunMovementY;
@@ -86,17 +86,29 @@ function showSparks(scene, source, dest, playerid) {
     playSound('pistol', source);
 };
 
-Gun.prototype.fire = function() {
-    if (!this.shooting) {
+Machinegun.prototype.fire = function() {
+    if (!this.shooting) { 
         this.shooting = true;
-        this.updateFrame();
+        var _this = this;
+        this.shoot_int = setInterval(function() {
+            _this.firebullet();
+        }, 100);
+    }
+}
+
+Machinegun.prototype.stop_fire = function() {
+    clearInterval(this.shoot_int);
+    this.shooting = false;
+}
+
+Machinegun.prototype.firebullet = function() {
 	// send the hit event to server to reduce player's health
 	var pickResult = this.getPick();
 	if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
 	    new BloodSpatter(this.scene, pickResult.pickedMesh);
 	    socket.emit('hit', {
 		id: pickResult.pickedMesh.playerId,
-		weapon: 'mg'
+		weapon: 'pistol'
 	    });
 	}
 	else if (pickResult.pickedPoint) {
@@ -110,5 +122,10 @@ Gun.prototype.fire = function() {
 	    socket.emit('pistolshot', event);
 	}
     addRecoil();
-    }
 };
+
+function addRecoil() {
+    var cam = scene.cameras[0];
+    cam.rotation.y += (Math.random()*.03) - .015;
+    cam.rotation.x -= Math.random()*.03;
+}

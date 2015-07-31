@@ -44,6 +44,10 @@ Weapon.prototype.getPick = function() {
     return null;
 }
 
+Weapon.prototype.stop_fire = function() {
+    return 1;
+}
+
 Weapon.prototype.shoot = function() {
     if (!this.active) {
         return;
