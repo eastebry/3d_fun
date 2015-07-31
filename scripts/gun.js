@@ -81,10 +81,11 @@ Gun.prototype.moveGun = function(e) {
     $('#weapon').css({ 'left': posX + 'px', 'bottom': posY + 'px' });
 };
 
-function showBlood(scene,  source, target, playerid) {
-    new BloodSpatter(this.scene, target);
+function showBlood(scene,  source, dest, playerid) {
+    console.log('showing blood!');
+    new BloodSpatter(scene, null, dest);
     playSound('pistol', source);
-    playSound('pain', target.position);
+    playSound('pain', dest);
 }
 
 function showSparks(scene, source, dest, playerid) {
@@ -104,7 +105,7 @@ Gun.prototype.fire = function() {
 		id: pickResult.pickedMesh.playerId,
 		weapon: 'pistol',
 		source: localPlayer.camera.position,
-		target: pickResult.pickedMesh
+		dest: pickResult.pickedMesh.position
 	    });
 	}
 	else if (pickResult.pickedPoint) {

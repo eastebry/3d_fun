@@ -36,7 +36,8 @@ function createScene(engine) {
     marineFactory(-3,3,-8, 'hurt');
     marineFactory(-5,3, -3,'shoot');
     marineFactory(-9,3, -4,'die');
-   
+
+    // var text = new TextBlock(scene, 'Slithy toves', localPlayer.camera.position.add(new BABYLON.Vector3(0, 0, 10)));
     var ryu = new Ryu(scene);
     scene.ryu = ryu;
     // Make some zombies
