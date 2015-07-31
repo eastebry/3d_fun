@@ -64,6 +64,9 @@ Player.prototype.initfpsControls = function(scene) {
             _this.die();
         }
         else {
+            if (_this.dead){
+                return;
+            }
             var index = evt.keyCode - 49;
             if (index < _this.guns.length && index >= 0) {
                 if (!_this.guns[index].active) {
