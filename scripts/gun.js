@@ -82,18 +82,16 @@ Gun.prototype.moveGun = function(e) {
 };
 
 function showBlood(scene,  source, dest, playerid) {
-    console.log('showing blood!');
     if (!dest || !dest.x) {
-	console.error('blood failed', dest);
 	return;
     }
-    new BloodSpatter(scene, null, dest);
+    // new BloodSpatter(scene, null, dest);
     playSound('pistol', source);
     playSound('pain', dest);
 }
 
 function showSparks(scene, source, dest, playerid) {
-    new Sparks(scene, dest);
+    // new Sparks(scene, dest);
     playSound('pistol', source);
     setTimeout(function() { playSound('ricochet', dest); }, 100);
 };
@@ -105,6 +103,7 @@ Gun.prototype.fire = function() {
 	// send the hit event to server to reduce player's health
 	var pickResult = this.getPick();
 	if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
+	    new BloodSpatter(this.scene, pickResult.pickedMesh);
 	    socket.emit('hit', {
 		id: pickResult.pickedMesh.playerId,
 		weapon: 'pistol',
@@ -113,6 +112,7 @@ Gun.prototype.fire = function() {
 	    });
 	}
 	else if (pickResult.pickedPoint) {
+	    new Sparks(this.scene, pickResult.pickedPoint);
 	    var event = {
 		id: pickResult.pickedMesh.playerId,
 		weapon: 'pistol',
