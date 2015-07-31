@@ -12,7 +12,7 @@ function Machinegun(name, size, scene) {
     // variables for animating
     this.index = 0;
     this.animation_direction = 1; //1 = up, -1 = down
-    this.animation_speed = 50;
+    this.animation_speed = 150;
     this.shooting = false;
 
     this.impactSpriteManager = new BABYLON.SpriteManager("impactManager", "img/impact.png", 2000, 800, this.scene);
@@ -80,9 +80,10 @@ Machinegun.prototype.fire = function() {
     if (!this.shooting) { 
         this.shooting = true;
         var _this = this;
+        this.firebullet();
         this.shoot_int = setInterval(function() {
             _this.firebullet();
-        }, 100);
+        }, 200);
     }
 }
 
@@ -99,7 +100,7 @@ Machinegun.prototype.firebullet = function() {
 	    new BloodSpatter(this.scene, pickResult.pickedMesh);
 	    socket.emit('hit', {
 		id: pickResult.pickedMesh.playerId,
-		weapon: 'pistol',
+		weapon: 'mg',
 		source: localPlayer.camera.position,
 		dest: pickResult.pickedMesh.position
 	    });
@@ -108,7 +109,7 @@ Machinegun.prototype.firebullet = function() {
 	    new Sparks(this.scene, pickResult.pickedPoint);
 	    var event = {
 		id: pickResult.pickedMesh.playerId,
-		weapon: 'pistol',
+		weapon: 'mg',
 		source: localPlayer.camera.position,
 		dest: pickResult.pickedPoint,
 	    };	    
