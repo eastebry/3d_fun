@@ -25,15 +25,15 @@ function BloodSpatter(scene, emitter, target) {
     this.particleSystem.colorDead = new BABYLON.Color4(1, 0, 0, 0.0);
 
     // Size of each particle (random between...
-    this.particleSystem.minSize = 0.1;
-    this.particleSystem.maxSize = 0.5;
+    this.particleSystem.minSize = 0.9;
+    this.particleSystem.maxSize = 1.6;
 
     // Life time of each particle (random between...
     this.particleSystem.minLifeTime = 0.3;
     this.particleSystem.maxLifeTime = 1.0;
 
     // Emission rate
-    this.particleSystem.emitRate = 30000;
+    this.particleSystem.emitRate = 150;
 
     // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
     this.particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
@@ -56,7 +56,7 @@ function BloodSpatter(scene, emitter, target) {
 
     // Start the particle system
     this.particleSystem.start();
-    this.particleSystem.manualEmitCount = 30000;
+    this.particleSystem.manualEmitCount = 600;
     this.particleSystem.disposeOnStop = true;
     var _this = this;
     setTimeout(function(){_this.particleSystem.stop();}, 2000);
@@ -67,9 +67,9 @@ function Sparks(scene, point) {
     emitter.position.copyFrom(point);
     emitter.setEnabled(true);
     BloodSpatter.call(this, scene, emitter);
-    this.particleSystem.minSize = 0.01;
-    this.particleSystem.maxSize = 0.2;
-    this.particleSystem.manualEmitCount = 10000;
+    this.particleSystem.minSize = 1.0;
+    this.particleSystem.maxSize = 1.6;
+    this.particleSystem.manualEmitCount = 300;
     this.particleSystem.direction1 = new BABYLON.Vector3(1, 1, 1);
     this.particleSystem.direction2 = new BABYLON.Vector3(-1, -1, -1);
     this.particleSystem.color1 = new BABYLON.Color4(1, 1, 0, 1.0);
