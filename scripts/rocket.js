@@ -39,7 +39,7 @@ RocketProjectile.prototype.update = function() {
     var movedRatio = (new Date().getTime() - this.startTime) / (this.endTime - this.startTime);
     var newPos = new BABYLON.Vector3.Lerp(this.originalPos, this.endPos, movedRatio);
     this.mesh.position = newPos;
-    if (movedRatio > 1) {
+    if (movedRatio > .95) {
         this.explode();
     }
 }

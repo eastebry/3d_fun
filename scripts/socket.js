@@ -2,7 +2,8 @@ var CLIENT_UPDATE_INTERVAL = 30;
 var mySocketId;
 var myHealth = 100;
 var opponents = {};
-var socket = io.connect(window.location.origin);
+var server = "10.255.54.2:8000";
+var socket = io.connect(server);
 var roomId = 'default';
 if (getQueryStrings()['room']) {
     roomId = getQueryStrings()['room'];
