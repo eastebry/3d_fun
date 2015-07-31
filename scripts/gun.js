@@ -79,41 +79,35 @@ Gun.prototype.moveGun = function(e) {
     var posY = startY + (shiftY/10);
 
     $('#weapon').css({ 'left': posX + 'px', 'bottom': posY + 'px' });
-}
+};
+
+function showSparks(scene, source, dest, playerid) {
+    new Sparks(scene, dest);
+};
 
 Gun.prototype.fire = function() {
     if (!this.shooting) {
         this.shooting = true;
         playSound('pistol');
         this.updateFrame();
-        // send the hit event to server to reduce player's health
-        var pickResult = this.getPick();
-        if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
-            new BloodSpatter(this.scene, pickResult.pickedMesh);
-            socket.emit('hit', {
-                id: pickResult.pickedMesh.playerId,
-                weapon: 'pistol'
-            });
-        } else if (pickResult.pickedMesh.playerId === undefined){
-            new Sparks(this.scene, pickResult.pickedPoint);
-            socket.emit('pistolshot', {
-                id: pickResult.pickedMesh.playerId,
-                weapon: 'pistol',
-                source: localPlayer.camera.position,
-                dest: pickResult.pickedPoint
-            });
-        }
+	// send the hit event to server to reduce player's health
+	var pickResult = this.getPick();
+	if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
+	    new BloodSpatter(this.scene, pickResult.pickedMesh);
+	    socket.emit('hit', {
+		id: pickResult.pickedMesh.playerId,
+		weapon: 'pistol'
+	    });
+	}
+	else if (pickResult.pickedPoint) {
+	    var event = {
+		id: pickResult.pickedMesh.playerId,
+		weapon: 'pistol',
+		source: localPlayer.camera.position,
+		dest: pickResult.pickedPoint,
+	    };	    
+	    showSparks(this.scene, event.source, event.dest, event.id);
+	    socket.emit('pistolshot', event);
+	}
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-

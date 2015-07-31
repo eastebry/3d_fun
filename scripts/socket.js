@@ -55,6 +55,10 @@ socket.on('rocketLaunch', function(data) {
     playSound('rocket', cam);
 })
 
+socket.on("pistolshot", function(event) {
+    showSparks(scene, event.source, event.dest, event.id);
+});
+
 socket.on('serverUpdate', function(data) {
     // console.log(data);
     if (!scene.zombies) {

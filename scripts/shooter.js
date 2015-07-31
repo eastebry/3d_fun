@@ -37,7 +37,6 @@ function createScene(engine) {
     marineFactory(-5,3, -3,'shoot');
     marineFactory(-9,3, -4,'die');
    
-    var inYoFace = new Marine(scene, pos.add(new BABYLON.Vector3(0, -2, 10)));
     var ryu = new Ryu(scene);
     scene.ryu = ryu;
     // Make some zombies

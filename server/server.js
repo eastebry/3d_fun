@@ -19,6 +19,13 @@ io.on('connection', function(socket) {
         io.to(socketRoomMap[data['playerId']]).emit('message', data['message']);
     });
 
+    socket.on('pistolshot', function(data){
+        console.log(data);
+        for (player in socketRoomMap) {
+            io.to(socketRoomMap[player]).emit('pistolshot', data);
+        }
+    });
+    
     socket.on('room', function(data) {
         var roomId = data['room'];
         socket.join(roomId);
