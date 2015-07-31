@@ -1,5 +1,10 @@
-var context = new AudioContext();
-
+var all_context = [
+    new AudioContext(),
+    new AudioContext(),
+    new AudioContext(),
+    new AudioContext(),
+];
+var current_context = 0;
 function Sound(src) { 
     this.src = src;
     this.volume = 1;
@@ -7,7 +12,7 @@ function Sound(src) {
 Sound.prototype.play = function(data) { 
     data = data || {};
     var a = new Audio(this.src);
-    this.context = context;
+    var context = this.context = all_context[current_context++ % all_context.length];
     var gain = this.gain = context.createGain();
     var panner = this.panner = context.createPanner();
     this.gain.connect(context.destination);
@@ -44,7 +49,8 @@ var _allsounds = {
     pain: load('sound/dsplpain.wav'),
     death: load('sound/dspldeth.wav'),
     rocket: load('sound/rocket.wav', 0.4), // dampen rocket firing vol
-    bomb: load('sound/bomb.wav', 2) // boost rocket explode vol
+    bomb: load('sound/bomb.wav', 2), // boost rocket explode vol
+    ricochet: load('sound/ricochet.wav')
 }
 
 function playSound(sound, location) { 

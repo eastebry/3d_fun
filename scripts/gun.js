@@ -81,9 +81,16 @@ Gun.prototype.moveGun = function(e) {
     $('#weapon').css({ 'left': posX + 'px', 'bottom': posY + 'px' });
 };
 
+function showBlood(scene,  source, target, playerid) {
+    new BloodSpatter(this.scene, target);
+    playSound('pistol', source);
+    playSound('pain', target.position);
+}
+
 function showSparks(scene, source, dest, playerid) {
     new Sparks(scene, dest);
     playSound('pistol', source);
+    setTimeout(function() { playSound('ricochet', dest); }, 100);
 };
 
 Gun.prototype.fire = function() {
@@ -93,10 +100,11 @@ Gun.prototype.fire = function() {
 	// send the hit event to server to reduce player's health
 	var pickResult = this.getPick();
 	if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
-	    new BloodSpatter(this.scene, pickResult.pickedMesh);
 	    socket.emit('hit', {
 		id: pickResult.pickedMesh.playerId,
-		weapon: 'pistol'
+		weapon: 'pistol',
+		source: localPlayer.camera.position,
+		target: pickResult.pickedMesh
 	    });
 	}
 	else if (pickResult.pickedPoint) {
