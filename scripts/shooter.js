@@ -4,10 +4,10 @@
 var canvas, scene, localPlayer, playerName;
 
 var START_POSITIONS = [
-    new BABYLON.Vector3(16, 2, 9),
-    new BABYLON.Vector3(-54, -8, -71),
-    new BABYLON.Vector3(-41, 12, 143),
-    new BABYLON.Vector3(-140, 12, 164),
+    //new BABYLON.Vector3(16, 2, 9), // for debugging/dev purposes
+    //new BABYLON.Vector3(-54, -8, -71),
+    //new BABYLON.Vector3(-41, 12, 143),
+    //new BABYLON.Vector3(-140, 12, 164),
     new BABYLON.Vector3(-148, 37, 63)
 ];
 
@@ -27,7 +27,7 @@ function createScene(engine) {
     createLights(scene);
 
     // this needs to be moved out to script/marine.js somehow
-    function marineFactory(x,y,z,animation) {
+    /*function marineFactory(x,y,z,animation) {
 	var marine = new Marine(scene, new BABYLON.Vector3(x, y, z));
 	marine.sprite.size = 2;
 	marine[animation](0);
@@ -36,8 +36,8 @@ function createScene(engine) {
     marineFactory(-3,3,-8, 'hurt');
     marineFactory(-5,3, -3,'shoot');
     marineFactory(-9,3, -4,'die');
-   
-    var inYoFace = new Marine(scene, pos.add(new BABYLON.Vector3(0, -2, 10)));
+    */
+    //var inYoFace = new Marine(scene, pos.add(new BABYLON.Vector3(0, -2, 10)));
     var ryu = new Ryu(scene);
     scene.ryu = ryu;
     // Make some zombies
@@ -139,9 +139,9 @@ window.onload = function () {
             scene.ryu.update();
 
             // Update zombies
-            for (var key in scene.zombies) {
+            /*for (var key in scene.zombies) {
                 scene.zombies[key].update();
-            }
+            }*/
             scene.updateables.forEach(function (that) {
                 that.update();
             });

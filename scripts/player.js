@@ -10,6 +10,7 @@ function Player(scene, position) {
     this.currentWeapon = this.guns[this.gun_index];
     this.createHud();
     this.dead = false;
+    this.camera.fov = 70 * Math.PI/180;
     addCursor();
 
     // we will use fog for an alpha splash when a character gets hit
@@ -172,7 +173,7 @@ Player.prototype.animateDieCamera = function() {
         BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
         BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 
-    var keysPosition = [];
+    /*var keysPosition = [];
     keysPosition.push({
         frame: 0,
         value: this.camera.position
@@ -182,7 +183,7 @@ Player.prototype.animateDieCamera = function() {
         value: new BABYLON.Vector3(this.camera.position.x, this.camera.position.y - 2, this.camera.position.z),
     });
 
-    animCamPosition.setKeys(keysPosition);
+    animCamPosition.setKeys(keysPosition);*/
 
     var animCamRotation = new BABYLON.Animation("animCam", "rotation", 30,
         BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
@@ -199,7 +200,7 @@ Player.prototype.animateDieCamera = function() {
     });
 
     animCamRotation.setKeys(keysRotation);
-    this.camera.animations.push(animCamPosition);
+    //this.camera.animations.push(animCamPosition);
     this.camera.animations.push(animCamRotation);
 
     scene.beginAnimation(this.camera, 0, 100, false);

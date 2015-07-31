@@ -1,50 +1,70 @@
+
 function Marine(scene, pos) { 
     if (!Marine.spritemanager) Marine.init(scene);
     this.state = 'walk';
     this.scene = scene;
     this.sprite = new BABYLON.Sprite('marine', Marine.spritemanager);
-    this.sprite.size = 5;
+    this.sprite.size = 7;
     this.sprite.position.copyFrom(pos);
     this.sheetWidth = 12;
     this.rotation = Math.random() * 2 * Math.PI;
     this.stateStack = [];
     this.timeouts = {};
+    this.running = false;
     this.sprite.animIndex = 0;
     var that = this;
 
+    var invisMaterial = new BABYLON.StandardMaterial('invismat', scene);
+    invisMaterial.alpha = 0;
+    // Make a box to use as for hit registration
+    this.hitbox = BABYLON.Mesh.CreateCylinder('hitbox', 4,4,4,6, scene);
+    this.hitbox.material = invisMaterial;
+
     // hackety hack hack
-    this.sprite._animate = function(deltaTime) { 
+    this.sprite._animate = function(deltaTime) {
         if (!this._animationStarted)
             return;
 
         this._time += deltaTime;
-	if (this._time <= this._delay) return;
-	else this._time %= this._delay;
+        if (this._time <= this._delay) return;
+        else this._time %= this._delay;
 
-	var dir = localPlayer.camera.rotation.y;
-	var r = that.rotation - dir;
-	var dr = (r + 31.416) % (2 * Math.PI);
-	var row = dr * 8 / (2 * Math.PI) | 0;
+        var dir = localPlayer.camera.rotation.y;
+        var r = that.rotation - dir;
+        var dr = (r + 1.15 * Math.PI) % (2 * Math.PI);
+        dr = dr < 0 ? dr + 2 * Math.PI : dr; // Fix weird negative dr
+        var row = dr * 8 / (2 * Math.PI) | 0;
 
-	this.anim = this.anim + 1 || 0;
-	if (this.anim >= this.frames.length && this._loopAnimation)
-	    this.anim = 0;
-	else if (this.anim >= this.frames.length && !this._loopAnimation) {
-	    this.anim = 0;
-	    this._animationStarted = false;
-	    if (this.disposeWhenFinishedAnimating)
-		this.dispose();
-	    return;
-	}
+        if (that.running) {
+            this.anim = this.anim + 1 || 0;
+        } else {
+            this.anim = 0;
+        }
+        if (this.anim >= this.frames.length && this._loopAnimation)
+            this.anim = 0;
+        else if (this.anim >= this.frames.length && !this._loopAnimation) {
+            this.anim = 0;
+            this._animationStarted = false;
+            if (this.disposeWhenFinishedAnimating)
+            this.dispose();
+            return;
+        }
 
-	var curframe = this.frames[this.anim] + row * that.sheetWidth;
-	this.cellIndex = curframe;
-	return;
+        var curframe = this.frames[this.anim] + row * that.sheetWidth;
+        this.cellIndex = curframe;
+        return;
     };
 
     this.walk();
 }
-Marine.prototype.animate = function(states, duration) { 
+Marine.prototype.setPosition = function(position) {
+    this.sprite.position.copyFrom(position);
+    this.hitbox.position.copyFrom(position);
+}
+Marine.prototype.setRotation = function(rotation) {
+    this.rotation = rotation;
+}
+Marine.prototype.animate = function(states, duration) {
     var that = this;
     if (!duration) { 
 	// blow away state stack
@@ -69,7 +89,7 @@ Marine.prototype.animate = function(states, duration) {
 	    states[0], 
 	    states[states.length-1] + 1,
 	    true,
-	    300
+	    150
 	);
 	that.sprite.animIndex = 0;
     }

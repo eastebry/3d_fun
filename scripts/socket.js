@@ -51,30 +51,37 @@ socket.on('serverUpdate', function(data) {
             // this is me!!
         }
         else {
-            var zombie = opponents[playerId];
-            if (!zombie) {
-                zombie = new Zombie(scene);
-                if (!scene.zombies) {
-                    scene.zombies = [];
+            var newPos = new BABYLON.Vector3(state.position[0],
+                                             state.position[1]-1.25,
+                                             state.position[2])
+            var marine = opponents[playerId];
+            if (!marine) {
+                marine = new Marine(scene, newPos);
+                if (!scene.marines) {
+                    scene.marines = [];
                 }
-                opponents[playerId] = zombie;
-                zombie.zmesh.playerId = playerId;
+                opponents[playerId] = marine;
+                marine.hitbox.playerId = playerId;
+            } else {
+                var movedist = BABYLON.Vector3.Distance(marine.sprite.position, newPos);
+                marine.running = (movedist > 0);
             }
-
-            zombie.zmesh.position.x = state.position[0];
+            marine.setPosition(newPos);
+            marine.setRotation(state.rotation[1]);
+            /*zombie.zmesh.position.x = state.position[0];
             zombie.zmesh.position.y = state.position[1];
             zombie.zmesh.position.z = state.position[2];
 
             zombie.zmesh.rotation.x = state.rotation[0];
             zombie.zmesh.rotation.y = state.rotation[1];
-            zombie.zmesh.rotation.z = state.rotation[2];
+            zombie.zmesh.rotation.z = state.rotation[2];*/
         }
     }
 
     for (var existingPlayerId in opponents) {
         if (!data[existingPlayerId]) {
             // disconnected player
-            opponents[existingPlayerId].zmesh.dispose();
+            opponents[existingPlayerId].sprite.dispose();
             delete opponents[existingPlayerId];
         }
     }
