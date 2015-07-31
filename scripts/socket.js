@@ -38,6 +38,7 @@ socket.on('health', function(data) {
     if (myHealth <= 0) {
         localPlayer.die()
     }
+    $("#health").text(myHealth+"%");
 })
 socket.on('message', function(message){
     $("#messages").append(escapeHtml(message) + "\n");

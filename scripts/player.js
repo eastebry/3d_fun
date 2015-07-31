@@ -101,7 +101,7 @@ Player.prototype.initfpsControls = function(scene) {
 };
 
 Player.prototype.createHud = function() {
-    var hud = $('<img id="hud", src="img/hud.png"/>')
+    var hud = $('<img id="hud", src="img/hud-modified.png"/>')
     hud.css({
         'width': '100%',
         'position': 'absolute',
@@ -204,7 +204,3 @@ Player.prototype.animateDieCamera = function() {
 
     scene.beginAnimation(this.camera, 0, 100, false);
 }
-
-
-
-

@@ -108,3 +108,15 @@ function groundParticles(scene, x, y, z) {
     setTimeout(function(){_this.particleSystem.stop();}, 2000);
 }
 
+function Sparks(scene, point) {
+    var emitter = BABYLON.Mesh.CreateBox("emitter", 0.01, scene);
+    emitter.position.copyFrom(point);
+    emitter.setEnabled(true);
+    BloodSpatter.call(this, scene, emitter);
+    // Colors of all particles
+    this.particleSystem.color1 = new BABYLON.Color4(1, 1, 0, 1.0);
+    this.particleSystem.color2 = new BABYLON.Color4(0, 0, 1, 1.0);
+    this.particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+    setTimeout(function() { emitter.dispose() }, 2010);
+}
+Sparks.prototype = BloodSpatter.prototype;

@@ -98,7 +98,25 @@ Gun.prototype.fire = function() {
             groundParticles(this.scene, pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z);
         }
     }
+    else if (pickResult.pickedPoint) {
+	new Sparks(this.scene, pickResult.pickedPoint);
+        socket.emit('pistolshot', {
+            id: pickResult.pickedMesh.playerId,
+            weapon: 'pistol',
+	    source: localPlayer.camera.position,
+	    dest: pickResult.pickedPoint
+        });
+    }
 }
+
+
+
+
+
+
+
+
+
 
 
 
