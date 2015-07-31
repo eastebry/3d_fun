@@ -61,6 +61,9 @@ io.on('connection', function(socket) {
         if (data['weapon'] === 'pistol') {
             damage = 40;
         }
+        else if (data['weapon'] === 'mg') {
+            damage = 20;
+        }
         else if (data['weapon'] === 'rocket') {
             damage = data['damage'];
         }
