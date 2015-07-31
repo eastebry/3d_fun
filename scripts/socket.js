@@ -2,7 +2,7 @@ var CLIENT_UPDATE_INTERVAL = 30;
 var mySocketId;
 var myHealth = 100;
 var opponents = {};
-// var server =  "10.255.54.2:8000";
+var server =  "10.255.54.2:8000";
 server =  window.location.href;
 var socket = io.connect(server);
 var roomId = 'default';
