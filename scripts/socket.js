@@ -31,13 +31,12 @@ socket.on('myId', function(data) {
 })
 
 socket.on('health', function(data) {
-    console.log("my current health " + data);
     myHealth = data;
     localPlayer.hit();
     if (myHealth <= 0) {
         localPlayer.die()
     }
-    $("#health").text(myHealth+"%");
+    $("#health").text(Math.round(myHealth)+"%");
 })
 socket.on('message', function(message){
     $("#messages").append(escapeHtml(message) + "\n");
