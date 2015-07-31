@@ -58,8 +58,8 @@ socket.on("pistolshot", function(event) {
     showSparks(scene, event.source, event.dest, event.id);
 });
 
-socket.on('hit', function(data) {
-    showBlood(scene, event.source, event.target, event.id);
+socket.on('pistolhit', function(event) {
+    showBlood(scene, event.source, event.dest, event.id);
 });
 
 socket.on('serverUpdate', function(data) {
