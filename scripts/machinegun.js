@@ -23,6 +23,9 @@ function Machinegun(name, size, scene) {
 inheritsFrom(Machinegun, Weapon);
 
 Machinegun.prototype.shootFrame = function(index){
+    if (!this.active) {
+        return;
+    }
     this.index = index;
     var name  = "img/weapons/" + this.name + "_" + this.index+ ".png";
     $('#weapon').attr("src", name);
@@ -94,6 +97,10 @@ Machinegun.prototype.stop_fire = function() {
 
 Machinegun.prototype.firebullet = function() {
 	// send the hit event to server to reduce player's health
+    if (!this.active) {
+        this.stop_fire;
+        return;
+    }
     this.shootFrame(1);
 	var pickResult = this.getPick();
 	if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
