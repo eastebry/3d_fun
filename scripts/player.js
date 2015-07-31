@@ -1,12 +1,15 @@
 function Player(scene) {
     this.scene = scene;
     this.initCamera(scene);
-    this.gun = new Gun('pistol', 4, scene);
-    this.rocket = new Rocket('rocket', 4, scene);
-    this.rocket.deactivate();
-    this.gun.activate();
-    this.currentWeapon = this.gun;
+    this.guns = [new Gun('pistol', 4, scene), new Rocket('rocket', 4, scene)];
+    this.gun_index = 0;
+    for (var i = 1; i < this.guns.length; i++){
+        this.guns[i].deactivate()
+    }
+    this.guns[this.gun_index].activate();
+    this.currentWeapon = this.guns[this.gun_index];
     this.createHud();
+    this.dead = false;
     addCursor();
 
     // we will use fog for an alpha splash when a character gets hit
@@ -50,25 +53,24 @@ Player.prototype.initfpsControls = function(scene) {
         canvas.requestPointerLock = canvas.requestPointerLock || canvas.msRequestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
         if (canvas.requestPointerLock) {
             canvas.requestPointerLock();
-            _this.gun.registerGunMovement();
+            _this.guns[_this.gun_index].registerGunMovement();
         }
         _this.currentWeapon.shoot();
     }, false);
 
     // Switch weapons
     window.addEventListener("keydown", function(evt) {
-        if (evt.keyCode == 49) { // "1", switch to gun
-            if (!_this.gun.active) {
-                _this.currentWeapon.deactivate();
-                _this.gun.activate();
-                _this.currentWeapon = _this.gun;
-            }
+        if (evt.keyCode == 82){
+            _this.die();
         }
-        if (evt.keyCode == 50) { // "2", switch to rocket
-            if (!_this.rocket.active) {
-                _this.currentWeapon.deactivate();
-                _this.rocket.activate();
-                _this.currentWeapon = _this.rocket;
+        else {
+            var index = evt.keyCode - 49;
+            if (index < _this.guns.length && index >= 0) {
+                if (!_this.guns[index].active) {
+                    _this.guns[_this.gun_index].deactivate();
+                    _this.gun_index = index;
+                    _this.guns[_this.gun_index].activate();
+                }
             }
         }
     });
@@ -111,11 +113,11 @@ Player.prototype.createHud = function() {
     $('#container').append(hud);
 };
 
-Player.prototype.updateFog = function(){
+Player.prototype.updateHitFog = function(){
     this.scene.fogDensity = this.scene.fogDensity/1.1;
     var _this = this;
     if (_this.scene.fogDensity >= .00005){
-        setTimeout(function(){ _this.updateFog()}, 10);
+        setTimeout(function(){ _this.updateHitFog()}, 10);
     }
     else {
         this.scene.fogDensity = 0;
@@ -125,13 +127,82 @@ Player.prototype.updateFog = function(){
 
 Player.prototype.hit = function() {
     if (!this.animatingRedAlpha) {
+        var audio = new Audio('sound/dsplpain.wav');
+        audio.play();
         this.animatingRedAlpha = true;
         this.scene.fogDensity = .06;
         var _this = this;
         setTimeout(function () {
-            _this.updateFog()
+            _this.updateHitFog()
         }, 10);
     }
 }
+
+Player.prototype.die = function() {
+    if (!this.dead){
+        this.dead = true;
+        var audio = new Audio('sound/dspldeth.wav');
+        audio.play();
+        var _this = this;
+        this.guns[this.gun_index].deactivate();
+        this.camera.applyGravity = false;
+        this.animateDieCamera();
+        this.camera.speed = 0;
+        setTimeout(function () {_this.updateDieFog()}, 10);
+        // TODO - how do we prompt the player to restart?
+    }
+
+}
+
+Player.prototype.updateDieFog = function(){
+    this.scene.fogDensity += .001;
+    var _this = this;
+    if (_this.scene.fogDensity < 1){
+        setTimeout(function(){ _this.updateDieFog()}, 30);
+    }
+    else {
+        this.scene.fogDensity = 1;
+    }
+}
+
+Player.prototype.animateDieCamera = function() {
+    var animCamPosition = new BABYLON.Animation("animCam", "position", 30,
+        BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    var keysPosition = [];
+    keysPosition.push({
+        frame: 0,
+        value: this.camera.position
+    });
+    keysPosition.push({
+        frame: 50,
+        value: new BABYLON.Vector3(this.camera.position.x, this.camera.position.y - 2, this.camera.position.z),
+    });
+
+    animCamPosition.setKeys(keysPosition);
+
+    var animCamRotation = new BABYLON.Animation("animCam", "rotation", 30,
+        BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    var keysRotation = [];
+    keysRotation.push({
+        frame: 0,
+        value: this.camera.rotation
+    });
+    keysRotation.push({
+        frame: 30,
+        value: new BABYLON.Vector3(-1, this.camera.rotation.y, 0)
+    });
+
+    animCamRotation.setKeys(keysRotation);
+    this.camera.animations.push(animCamPosition);
+    this.camera.animations.push(animCamRotation);
+
+    scene.beginAnimation(this.camera, 0, 100, false);
+}
+
+
 
 

@@ -8,7 +8,7 @@ var MCOUNT = 100;
 
 function createScene(engine) {
     var scene = new BABYLON.Scene(engine);
-    scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
+    scene.gravity = new BABYLON.Vector3(0, -1, 0);
     scene.collisionsEnabled = true;
 
     // createLevel(scene);
@@ -17,7 +17,23 @@ function createScene(engine) {
     createGround(scene, 1000, 1000);
     createSkybox(scene);
     createLights(scene);
-    createBox(scene, 10,10,10);
+    //createBox(scene, 10,10,10);
+
+
+    // this needs to be moved out to script/marine.js somehow
+    var spriteManagerMarines = new BABYLON.SpriteManager('marinesManager', '../assets/marine.png', 2000, 64, scene);
+    function marineFactory(x,y,z,start,end) {
+        var marine = new BABYLON.Sprite('marine', spriteManagerMarines);
+        marine.position.x = x;
+        marine.position.y = y;
+        marine.position.z = z;
+        marine.playAnimation(start,end,true,200);
+        marine.size = 2;
+    }
+    marineFactory(0,3,0,0,4);
+    marineFactory(-3,3,0,4,6);
+    marineFactory(-5,3,5,2,4,12);
+    marineFactory(-9,3,4,84,90);
 
     // Make some zombies
     // var zombies = []

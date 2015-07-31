@@ -88,7 +88,9 @@ Weapon.prototype.activate = function() {
         'z-index': 1,
     });
     $('#container').append(gun);
-}
+};
+
+Weapon.prototype.registerGunMovement = function(){};
 
 var inheritsFrom = function (child, parent) {
     child.prototype = Object.create(parent.prototype);
