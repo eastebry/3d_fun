@@ -17,10 +17,10 @@ function playSound(sound, location) {
 	var a = localPlayer.camera.position;
 	var b = location;
 	var d = a.subtract(b).length() / 10
-	volume = 3 / (d + 3);
-	volume = Math.pow(volume, 0.8);
-	if (soiund == 'rocket')
-	    volumne *= 0.5;
+	volume = 20 / (d + 20);
+	volume = Math.pow(volume, 4);
+	if (sound == 'rocket')
+	    volume *= 0.2;
     }
     if (sound in _allsounds) {
 	if (!context.createGain)
@@ -47,8 +47,6 @@ function playSound(sound, location) {
 	    console.log(location);
 	    console.log(p, r);
 	}
-	else
-	    return;
 
 	source.loop = true;
 	if (!source.start) source.start = source.noteOn;
