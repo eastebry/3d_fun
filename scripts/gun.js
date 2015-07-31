@@ -84,17 +84,19 @@ Gun.prototype.moveGun = function(e) {
 Gun.prototype.fire = function() {
     if (!this.shooting) {
         this.shooting = true;
-	playSound('pistol');
+        playSound('pistol');
         this.updateFrame();
-    }
-    // send the hit event to server to reduce player's health
-    var pickResult = this.getPick();
-    if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
-        new BloodSpatter(this.scene, pickResult.pickedMesh);
-        socket.emit('hit', {
-            id: pickResult.pickedMesh.playerId,
-            weapon: 'pistol'
-        });
+        // send the hit event to server to reduce player's health
+        var pickResult = this.getPick();
+        if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
+            new BloodSpatter(this.scene, pickResult.pickedMesh);
+            socket.emit('hit', {
+                id: pickResult.pickedMesh.playerId,
+                weapon: 'pistol'
+            });
+        } else if (pickResult.pickedMesh.playerId === undefined){
+            groundParticles(this.scene, pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z);
+        }
     }
 }
 
