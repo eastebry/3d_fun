@@ -15,6 +15,13 @@ var roomHealthState = {};
 io.on('connection', function(socket) {
     socket.emit('myId', socket.id);
 
+    socket.on('message', function(data){
+        console.log(data);
+        for (player in socketRoomMap) {
+            io.to(socketRoomMap[player]).emit('message', data['message']);
+        }
+    });
+
     socket.on('room', function(data) {
         var roomId = data['room'];
         socket.join(roomId);
@@ -70,7 +77,6 @@ io.on('connection', function(socket) {
     });
 
     socket.on('disconnect', function() {
-        console.log("delete a player");
         var gameState = roomState[socketRoomMap[socket.id]];
         var healthState = roomHealthState[socketRoomMap[socket.id]];
         if (gameState) {

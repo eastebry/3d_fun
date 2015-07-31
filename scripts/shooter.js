@@ -2,9 +2,15 @@
 
 "use strict";
 
-var freeCamera, canvas, scene, localPlayer;
-var gunMovementX = 0, gunMovementY = 0;
-var MCOUNT = 100;
+var canvas, scene, localPlayer, playerName;
+
+var START_POSITIONS = [
+    new BABYLON.Vector3(16, 2, 9),
+    new BABYLON.Vector3(-54, -8, -71),
+    new BABYLON.Vector3(-41, 12, 143),
+    new BABYLON.Vector3(-140, 12, 164),
+    new BABYLON.Vector3(-148, 37, 63)
+];
 
 function createScene(engine) {
     var scene = new BABYLON.Scene(engine);
@@ -15,7 +21,8 @@ function createScene(engine) {
 
     // createLevel(scene);
     BABYLON.SceneLoader.ImportMesh("","","assets/level1.babylon", scene)
-    localPlayer = new Player(scene);
+    var pos = START_POSITIONS[Math.floor(Math.random() * START_POSITIONS.length)];
+    localPlayer = new Player(scene, pos);
     // createGround(scene, 1000, 1000);
     createSkybox(scene);
     createLights(scene);
@@ -103,6 +110,14 @@ function createLights(scene){
 window.onload = function () {
     canvas = document.getElementById("canvas");
 
+    // Lol, this is janky. The entire cookie is the username :P
+    if (document.cookie === ""){
+        playerName = prompt("Enter your username:");
+        document.cookie = playerName;
+    }
+    else {
+        playerName = document.cookie;
+    }
     if (!BABYLON.Engine.isSupported()) {
         window.alert('Browser not supported');
     } else {

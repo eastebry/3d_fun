@@ -1,6 +1,6 @@
-function Player(scene) {
+function Player(scene, position) {
     this.scene = scene;
-    this.initCamera(scene);
+    this.initCamera(scene, position);
     this.guns = [new Gun('pistol', 4, scene), new Rocket('rocket', 4, scene)];
     this.gun_index = 0;
     for (var i = 1; i < this.guns.length; i++){
@@ -20,8 +20,8 @@ function Player(scene) {
     scene.fogDensity = this.fogDensity;
 };
 
-Player.prototype.initCamera = function(scene) {
-    var freeCamera = new BABYLON.FreeCamera("free", new BABYLON.Vector3(15, 3, 0), scene);
+Player.prototype.initCamera = function(scene, position) {
+    var freeCamera = new BABYLON.FreeCamera("free", position, scene);
     freeCamera.minZ = 1;
     freeCamera.checkCollisions = true;
     freeCamera.applyGravity = true;
@@ -143,6 +143,7 @@ Player.prototype.hit = function() {
 
 Player.prototype.die = function() {
     if (!this.dead){
+        socket.emit("message", {"playerId": mySocketId, "message": playerName + " was killed"});
         this.dead = true;
         var audio = new Audio('sound/dspldeth.wav');
         audio.play();
