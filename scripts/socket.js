@@ -17,6 +17,13 @@ socket.on('health', function(data) {
     console.log("my current health " + data);
     myHealth = data;
     localPlayer.hit();
+    if (myHealth === 0) {
+        // lock the current player
+    }
+})
+
+socket.on('playerDown', function(data) {
+    // opponents[data].fall();
 })
 
 socket.on('serverUpdate', function(data) {

@@ -39,12 +39,19 @@ io.on('connection', function(socket) {
     socket.on('hit', function(data) {
         var healthState = roomHealthState[socketRoomMap[socket.id]];
         var damage = 0;
-        if (data['weapon'] === 'pistol') damage = 5;
-        else damage = 20;
+        if (data['weapon'] === 'pistol') {
+            damage = 5;
+        }
+        else {
+            damage = 20;
+        }
         if (healthState[data['id']]) {
             healthState[data['id']] -= damage;
         }
         else {
+            if (healthState[data['id']] === 0) {
+                io.to(socketRoomMap[socket.id]).emit('playerDown', data['id']);
+            }
             healthState[data['id']] = 100;
             healthState[data['id']] -= damage;
         }
@@ -54,6 +61,7 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         console.log("delete a player");
         var gameState = roomState[socketRoomMap[socket.id]];
+        var healthState = roomHealthState[socketRoomMap[socket.id]];
         if (gameState) {
             delete gameState[socket.id];
             delete socketRoomMap[socket.id];
