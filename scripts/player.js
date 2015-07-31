@@ -8,6 +8,13 @@ function Player(scene) {
     this.currentWeapon = this.gun;
     this.createHud();
     addCursor();
+
+    // we will use fog for an alpha splash when a character gets hit
+    scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+    scene.fogColor = new BABYLON.Color3(0.9, 0, 0);
+
+    this.fogDensity = 0.00;
+    scene.fogDensity = this.fogDensity;
 };
 
 Player.prototype.initCamera = function(scene) {
@@ -103,3 +110,28 @@ Player.prototype.createHud = function() {
     });
     $('#container').append(hud);
 };
+
+Player.prototype.updateFog = function(){
+    this.scene.fogDensity = this.scene.fogDensity/1.1;
+    var _this = this;
+    if (_this.scene.fogDensity >= .00005){
+        setTimeout(function(){ _this.updateFog()}, 10);
+    }
+    else {
+        this.scene.fogDensity = 0;
+        this.animatingRedAlpha = false;
+    }
+}
+
+Player.prototype.hit = function() {
+    if (!this.animatingRedAlpha) {
+        this.animatingRedAlpha = true;
+        this.scene.fogDensity = .06;
+        var _this = this;
+        setTimeout(function () {
+            _this.updateFog()
+        }, 10);
+    }
+}
+
+
