@@ -26,6 +26,12 @@ socket.on('playerDown', function(data) {
     // opponents[data].fall();
 })
 
+socket.on('rocketLaunch', function(data) {
+    var pick = new BABYLON.Vector3(data['pickpos'][0], data['pickpos'][1], data['pickpos'][2]);
+    var cam = new BABYLON.Vector3(data['campos'][0], data['campos'][1], data['campos'][2]);
+    var projectile = new RocketProjectile(scene, cam, pick); 
+})
+
 socket.on('serverUpdate', function(data) {
     // console.log(data);
     if (!scene.zombies) {
@@ -84,7 +90,7 @@ function getQueryStrings() {
 
 setInterval(function() {
     var camera = localPlayer.camera;
-    socket.emit('clientUpdate', {
+    var emit_data= {
         position: [
             camera.position.x,
             camera.position.y,
@@ -95,5 +101,7 @@ setInterval(function() {
             camera.rotation.y,
             camera.rotation.z,
         ],
-    })
+        rockets: []
+    };
+    socket.emit('clientUpdate', emit_data);
 }, CLIENT_UPDATE_INTERVAL);

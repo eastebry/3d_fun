@@ -44,13 +44,6 @@ Weapon.prototype.getPick = function() {
     var pickResult  = this.scene.pick(x, y, null, false, scene.activeCamera);
     if (pickResult.hit) {
         // console.log(pickResult);
-        // send the hit event to server to reduce player's health
-        if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
-            socket.emit('hit', {
-                id: pickResult.pickedMesh.playerId,
-                weapon: 'pistol'
-            });
-        }
 
         return pickResult;
         // TODO - create an impact sprite, this method looks pretty bad

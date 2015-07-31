@@ -88,6 +88,14 @@ Gun.prototype.fire = function() {
         audio.play();
         this.updateFrame();
     }
+    // send the hit event to server to reduce player's health
+    var pickResult = this.getPick();
+    if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
+        socket.emit('hit', {
+            id: pickResult.pickedMesh.playerId,
+            weapon: 'pistol'
+        });
+    }
 }
 
 

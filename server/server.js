@@ -6,7 +6,7 @@ var io = require('socket.io')(httpServer);
 var SERVER_UPDATE_INTERVAL = 50;
 
 server.use(express.static(__dirname + '/../'));
-httpServer.listen(8000);
+httpServer.listen(8001);
 
 var socketRoomMap = {};
 var roomState = {};
@@ -36,11 +36,22 @@ io.on('connection', function(socket) {
         }
     });
 
+    socket.on('rocketLaunch', function(data) {
+        for (player in socketRoomMap) {
+            if (data['playerId'] != player) {
+                io.to(socketRoomMap[player]).emit('rocketLaunch', data);
+            }
+        }
+    });
+
     socket.on('hit', function(data) {
         var healthState = roomHealthState[socketRoomMap[socket.id]];
         var damage = 0;
         if (data['weapon'] === 'pistol') {
             damage = 40;
+        }
+        else if (data['weapon'] === 'rocket') {
+            damage = data['damage'];
         }
         else {
             damage = 20;
