@@ -39,6 +39,7 @@ Machinegun.prototype.updateFrame = function(){
     }
     var name  = "img/weapons/" + this.name + "_" + this.index+ ".png";
     $('#weapon').attr("src", name);
+    $("#weapon").css("width", "40%");
     var _this = this;
     if (this.shooting){
         setTimeout(function(){_this.updateFrame()}, this.animation_speed);

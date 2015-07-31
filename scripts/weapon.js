@@ -75,6 +75,10 @@ Weapon.prototype.activate = function() {
         'width': '20%',
         'z-index': 1,
     });
+    if (this.name == "machinegun") {
+        gun.css("width", "40%");
+        gun.css("left", "20%");
+    }
     $('#container').append(gun);
 };
 
