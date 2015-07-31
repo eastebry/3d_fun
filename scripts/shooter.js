@@ -19,8 +19,6 @@ function createScene(engine) {
     // createGround(scene, 1000, 1000);
     createSkybox(scene);
     createLights(scene);
-    //createBox(scene, 10,10,10);
-
 
     // this needs to be moved out to script/marine.js somehow
     var spriteManagerMarines = new BABYLON.SpriteManager('marinesManager', '../assets/marine.png', 2000, 64, scene);
@@ -55,6 +53,7 @@ function createBox(scene, x, y, z){
     var box = BABYLON.Mesh.CreateBox("p1", 8, scene);
     box.material = cubeWallMaterial;
     box.position = new BABYLON.Vector3(x, y, z);
+    return box;
 }
 
 function createGround(scene, w, h){

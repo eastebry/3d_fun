@@ -43,12 +43,7 @@ Weapon.prototype.getPick = function() {
     var y = canvas.height()/2;
     var pickResult  = this.scene.pick(x, y, null, false, scene.activeCamera);
     if (pickResult.hit) {
-        // console.log(pickResult);
-
         return pickResult;
-        // TODO - create an impact sprite, this method looks pretty bad
-        //var newsprite = new BABYLON.Sprite("impact", this.impactSpriteManager);
-        //newsprite.position = pickResult.pickedPoint;
     }
     return null;
 }

@@ -6,12 +6,16 @@ function Rocket(name, size, scene) {
     // Variables for moving the gun
 
     var _this = this;
-
+    this.nextFire = 0;
 }
 
 inheritsFrom(Rocket, Weapon);
 
 Rocket.prototype.fire = function() {
+    if (new Date().getTime() < this.nextFire) {
+        return;
+    }
+    this.nextFire = new Date().getTime() + 2000;
     var pick = this.getPick();
     if (pick == null) {
         // wat
@@ -78,22 +82,40 @@ RocketProjectile.prototype.explode = function() {
     var thisIndex = this.scene.updateables.indexOf(this);
     this.scene.updateables.splice(thisIndex, 1);
     this.mesh.dispose();
-    explosionDamage(explosion.position, 5, 100);
+    explosionDamage(explosion.position, 15, 150);
 }
 
 function explosionDamage(position, radius, damage) {
     for (opponent in opponents) {
         var distance = BABYLON.Vector3.Distance(position, opponents[opponent].zmesh.position);
         distance = Math.max(0, radius - distance);
+        if (distance > 0) {
+            var multiplier = distance / radius;
+            var damage = damage * multiplier;
+            var hit_data = {
+               damage: damage,
+               playerId: mySocketId,
+               id: opponent,
+               weapon: 'rocket',
+            }
+            socket.emit('hit', hit_data);
+        }
+    }
+    // Self damage
+    var distance = BABYLON.Vector3.Distance(position, this.scene.cameras[0].position);
+    distance = Math.max(0, radius - distance);
+    if (distance > 0) {
         var multiplier = distance / radius;
         var damage = damage * multiplier;
+        console.log(damage);
         var hit_data = {
            damage: damage,
            playerId: mySocketId,
-           id: opponent,
+           id: mySocketId,
            weapon: 'rocket',
         }
         socket.emit('hit', hit_data);
     }
+    
 }
     
