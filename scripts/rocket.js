@@ -24,8 +24,7 @@ Rocket.prototype.fire = function() {
     var projectile = new RocketProjectile(this.scene, this.scene.cameras[0].position, pick.pickedPoint);
     var projectile_data = SerializeProjectile(this.scene.cameras[0].position, pick.pickedPoint);
     socket.emit("rocketLaunch", projectile_data);
-    var audio = new Audio('sound/rocket.wav');
-    audio.play();
+    playSound('rocket', this.scene.cameras[0].position);
 }
 
 function SerializeProjectile(cameraPosition, pick){
@@ -64,8 +63,7 @@ RocketProjectile.prototype.update = function() {
 }
 
 RocketProjectile.prototype.explode = function() {
-    var audio = new Audio('sound/bomb.wav');
-    audio.play();
+    playSound('bomb', this.mesh.position);
     socket.emit('rocket_explode', {
         id: mySocketId,
         rocket_id: this.id

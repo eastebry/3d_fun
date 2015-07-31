@@ -31,7 +31,8 @@ socket.on('playerDown', function(data) {
 socket.on('rocketLaunch', function(data) {
     var pick = new BABYLON.Vector3(data['pickpos'][0], data['pickpos'][1], data['pickpos'][2]);
     var cam = new BABYLON.Vector3(data['campos'][0], data['campos'][1], data['campos'][2]);
-    var projectile = new RocketProjectile(scene, cam, pick); 
+    var projectile = new RocketProjectile(scene, cam, pick);
+    playSound('rocket', cam);
 })
 
 socket.on('serverUpdate', function(data) {
@@ -91,6 +92,7 @@ function getQueryStrings() {
 }
 
 setInterval(function() {
+    if (!localPlayer) return console.error("No local player");
     var camera = localPlayer.camera;
     var emit_data= {
         position: [
