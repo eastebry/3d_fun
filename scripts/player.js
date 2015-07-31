@@ -125,6 +125,8 @@ Player.prototype.updateFog = function(){
 
 Player.prototype.hit = function() {
     if (!this.animatingRedAlpha) {
+        var audio = new Audio('sound/dsplpain.wav');
+        audio.play();
         this.animatingRedAlpha = true;
         this.scene.fogDensity = .06;
         var _this = this;
