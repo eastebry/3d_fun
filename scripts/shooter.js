@@ -8,7 +8,7 @@ var MCOUNT = 100;
 
 function createScene(engine) {
     var scene = new BABYLON.Scene(engine);
-    scene.gravity = new BABYLON.Vector3(0, -10, 0);
+    scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
     scene.collisionsEnabled = true;
 
     // createLevel(scene);
