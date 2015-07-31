@@ -37,13 +37,21 @@ function addCursor() {
     $('#container').append(cursor);
 }
 
-Weapon.prototype.getPick = function() { 
+Weapon.prototype.getPick = function() {
     var canvas = $('#canvas');
     var x =  canvas.width()/2;
     var y = canvas.height()/2;
     var pickResult  = this.scene.pick(x, y, null, false, scene.activeCamera);
     if (pickResult.hit) {
-        console.log(pickResult);
+        // console.log(pickResult);
+        // send the hit event to server to reduce player's health
+        if (pickResult.pickedMesh && pickResult.pickedMesh.playerId) {
+            socket.emit('hit', {
+                id: pickResult.pickedMesh.playerId,
+                weapon: 'pistol'
+            });
+        }
+
         return pickResult;
         // TODO - create an impact sprite, this method looks pretty bad
         //var newsprite = new BABYLON.Sprite("impact", this.impactSpriteManager);
