@@ -43,8 +43,8 @@ var _allsounds = {
     pistol: load('sound/dspistol.wav'),
     pain: load('sound/dsplpain.wav'),
     death: load('sound/dspldeth.wav'),
-    rocket: load('sound/rocket.wav', 0.4),
-    bomb: load('sound/bomb.wav')
+    rocket: load('sound/rocket.wav', 0.4), // dampen rocket firing vol
+    bomb: load('sound/bomb.wav', 2) // boost rocket explode vol
 }
 
 function playSound(sound, location) { 
