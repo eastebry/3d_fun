@@ -1,4 +1,13 @@
-function BloodSpatter(scene, emitter) {
+function BloodSpatter(scene, emitter, target) {
+
+    if (!emitter) {
+	emitter = BABYLON.Mesh.CreateBox("emitter", 0.01, scene);
+	console.log('target', target);
+	emitter.position.copyFrom(target);
+	emitter.setEnabled(true);
+	// setTimeout(function(){ emitter.dispose();}, 5010);
+    }
+    
     // Create a particle system
     this.particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
 

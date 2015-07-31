@@ -3,6 +3,8 @@ function Marine(scene, pos) {
     if (!Marine.spritemanager) Marine.init(scene);
     this.state = 'walk';
     this.scene = scene;
+    this.text = new TextBlock(scene, "player", pos);
+    this.text.mesh.setEnabled(false);
     this.sprite = new BABYLON.Sprite('marine', Marine.spritemanager);
     this.sprite.size = 7;
     this.sprite.position.copyFrom(pos);
@@ -25,6 +27,8 @@ function Marine(scene, pos) {
         if (!this._animationStarted)
             return;
 
+	that.text.mesh.position.copyFrom(that.sprite.position);
+	
         this._time += deltaTime;
         if (this._time <= this._delay) return;
         else this._time %= this._delay;

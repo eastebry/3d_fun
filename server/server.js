@@ -80,6 +80,11 @@ io.on('connection', function(socket) {
             healthState[data['id']] = 100;
             healthState[data['id']] -= damage;
         }
+
+        for (player in socketRoomMap) {
+            io.to(socketRoomMap[player]).emit('pistolhit', data);
+        }
+	
         io.to(data['id']).emit('health', healthState[data['id']]);
     });
 
