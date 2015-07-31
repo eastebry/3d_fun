@@ -41,11 +41,11 @@ function createScene(engine) {
     var ryu = new Ryu(scene);
     scene.ryu = ryu;
     // Make some zombies
-    // var zombies = []
-    // for (var i = 0;i<3;i++) {
-    //     zombies.push(new Zombie(scene));
-    // }
-    // scene.zombies = zombies;
+    var zombies = []
+    for (var i = 0;i<3;i++) {
+        zombies.push(new Ryu(scene));
+    }
+    scene.zombies = zombies;
     return scene;
 }
 
@@ -139,17 +139,14 @@ window.onload = function () {
             scene.ryu.update();
 
             // Update zombies
-            /*for (var key in scene.zombies) {
-                scene.zombies[key].update();
-            }*/
             scene.updateables.forEach(function (that) {
                 that.update();
             });
-            // if (scene.zombies) {
-            //     scene.zombies.map(function(that) {
-            //         that.update();
-            //     });
-            // }
+            if (scene.zombies) {
+                 scene.zombies.map(function(that) {
+                     that.update();
+                 });
+             }
         });
     }
 };

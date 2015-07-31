@@ -5,6 +5,7 @@ function Zombie(scene) {
     this.sleepUntil = 0;
     this.speed = 2;
     this.isMoving = false;
+    this.basePos = new BABYLON.Vector3(0, 11, 180);
 };
 
 Zombie.prototype.createZombie = function(scene) {
@@ -15,9 +16,9 @@ Zombie.prototype.createZombie = function(scene) {
     zombie.material.diffuseTexture = new BABYLON.Texture("textures/zombie.png", scene);
     zombie.material.diffuseTexture.hasAlpha = true;
     zombie.material.backFaceCulling = false;
-    zombie.position.z = 0;
-    zombie.position.x = 5;
-    zombie.position.y = 2.5;
+    zombie.position.z = 177;
+    zombie.position.x = 9;
+    zombie.position.y = 11;
     this.zmesh = zombie;
 };
 
@@ -45,15 +46,16 @@ Zombie.prototype.setDestination = function(nextPos) {
 
 Zombie.prototype.update = function() {
     // Always look at the camera
-    // this.zmesh.lookAt(this.scene.activeCamera.position);
+     this.zmesh.lookAt(this.scene.activeCamera.position);
 
     // Set a new destination and then sleep a random amount of time
-    // if (!this.isMoving) {
-    //     if (new Date().getTime() > this.sleepUntil) {
-    //         var nextPos = new BABYLON.Vector3(Math.random()*50-25, 2.5, Math.random()*50-25);
-    //         this.setDestination(nextPos);
-    //         this.sleepUntil = new Date().getTime() + Math.random()*5000;
-    //     }
-    // }
+     if (!this.isMoving) {
+         if (new Date().getTime() > this.sleepUntil) {
+             var nextPos = new BABYLON.Vector3(Math.random()*40-20, 0, Math.random()*40-20);
+             nextPos = this.basePos.add(nextPos);
+             this.setDestination(nextPos);
+             this.sleepUntil = new Date().getTime() + Math.random()*2500;
+         }
+     }
     this.doMovement();
 }
