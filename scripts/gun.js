@@ -84,8 +84,7 @@ Gun.prototype.moveGun = function(e) {
 Gun.prototype.fire = function() {
     if (!this.shooting) {
         this.shooting = true;
-        var audio = new Audio('sound/dspistol.wav');
-        audio.play();
+	playSound('pistol');
         this.updateFrame();
     }
     // send the hit event to server to reduce player's health

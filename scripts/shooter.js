@@ -1,5 +1,4 @@
 /// <reference path="babylon.js" />
-
 "use strict";
 
 var canvas, scene, localPlayer, playerName;
@@ -28,20 +27,19 @@ function createScene(engine) {
     createLights(scene);
 
     // this needs to be moved out to script/marine.js somehow
-    var spriteManagerMarines = new BABYLON.SpriteManager('marinesManager', '../assets/marine.png', 2000, 64, scene);
-    function marineFactory(x,y,z,start,end) {
-        var marine = new BABYLON.Sprite('marine', spriteManagerMarines);
-        marine.position.x = x;
-        marine.position.y = y;
-        marine.position.z = z;
-        marine.playAnimation(start,end,true,200);
-        marine.size = 2;
+    function marineFactory(x,y,z,animation) {
+	var marine = new Marine(scene, new BABYLON.Vector3(x, y, z));
+	marine.sprite.size = 2;
+	marine[animation](0);
     }
-    marineFactory(0,3,0,0,4);
-    marineFactory(-3,3,0,4,6);
-    marineFactory(-5,3,5,2,4,12);
-    marineFactory(-9,3,4,84,90);
-
+    marineFactory(0, 3,-8, 'walk');
+    marineFactory(-3,3,-8, 'hurt');
+    marineFactory(-5,3, -3,'shoot');
+    marineFactory(-9,3, -4,'die');
+   
+    var inYoFace = new Marine(scene, pos.add(new BABYLON.Vector3(0, -2, 10)));
+    var ryu = new Ryu(scene);
+    scene.ryu = ryu;
     // Make some zombies
     // var zombies = []
     // for (var i = 0;i<3;i++) {
@@ -128,11 +126,17 @@ window.onload = function () {
         });
 
         scene = createScene(engine);
-        // Enable keyboard/mouse controls on the scene (FPS like mode)
+	BABYLON.SceneLoader.ImportMesh(null, "assets/", "models.babylon", scene, 
+				       function (newMeshes, particleSystems) {
+	    _rocketmesh = newMeshes[0];
+            _rocketmesh.setEnabled(false); 					   
+	});
 
+        // Enable keyboard/mouse controls on the scene (FPS like mode)
         //scene.registerBeforeRender(update);
         engine.runRenderLoop(function () {
             scene.render();
+            scene.ryu.update();
 
             // Update zombies
             for (var key in scene.zombies) {
@@ -149,3 +153,5 @@ window.onload = function () {
         });
     }
 };
+
+var _rocketmesh = null;

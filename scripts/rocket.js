@@ -24,8 +24,7 @@ Rocket.prototype.fire = function() {
     var projectile = new RocketProjectile(this.scene, this.scene.cameras[0].position, pick.pickedPoint);
     var projectile_data = SerializeProjectile(this.scene.cameras[0].position, pick.pickedPoint);
     socket.emit("rocketLaunch", projectile_data);
-    var audio = new Audio('sound/rocket.wav');
-    audio.play();
+    playSound('rocket', this.scene.cameras[0].position);
 }
 
 function SerializeProjectile(cameraPosition, pick){
@@ -37,13 +36,14 @@ function SerializeProjectile(cameraPosition, pick){
     return data;
 }
 
-
 function RocketProjectile(scene, position, pickpos) {
     this.id = Math.random().toString(36).substring(7);
     this.scene = scene;
     scene.updateables.push(this);
     this.speed = 10;
-    var rocket = new BABYLON.Mesh.CreateSphere("rocket", 10.0, 1, scene)
+    var rocket = _rocketmesh.clone(this.id);
+    rocket.id = this.id;
+    rocket.rotation = localPlayer.camera.rotation
     this.mesh = rocket;
     rocket.position.copyFrom(position);
     this.endPos = pickpos.clone();
@@ -63,9 +63,10 @@ RocketProjectile.prototype.update = function() {
     }
 }
 
+var _rocketmesh = null;
+
 RocketProjectile.prototype.explode = function() {
-    var audio = new Audio('sound/bomb.wav');
-    audio.play();
+    playSound('bomb', this.mesh.position);
     socket.emit('rocket_explode', {
         id: mySocketId,
         rocket_id: this.id
@@ -81,7 +82,8 @@ RocketProjectile.prototype.explode = function() {
     }, 35*25);
     var thisIndex = this.scene.updateables.indexOf(this);
     this.scene.updateables.splice(thisIndex, 1);
-    this.mesh.dispose();
+    var mIndex  = this.scene.meshes.indexOf(this.mesh);
+    this.scene.meshes.splice(mIndex, 1);
     explosionDamage(explosion.position, 15, 150);
 }
 
@@ -118,4 +120,3 @@ function explosionDamage(position, radius, damage) {
     }
     
 }
-    

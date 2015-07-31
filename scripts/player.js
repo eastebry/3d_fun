@@ -130,8 +130,7 @@ Player.prototype.updateHitFog = function(){
 
 Player.prototype.hit = function() {
     if (!this.animatingRedAlpha) {
-        var audio = new Audio('sound/dsplpain.wav');
-        audio.play();
+	playSound('pain');
         this.animatingRedAlpha = true;
         this.scene.fogDensity = .06;
         var _this = this;
@@ -145,8 +144,7 @@ Player.prototype.die = function() {
     if (!this.dead){
         socket.emit("message", {"playerId": mySocketId, "message": playerName + " was killed"});
         this.dead = true;
-        var audio = new Audio('sound/dspldeth.wav');
-        audio.play();
+	playSound('death');
         var _this = this;
         this.guns[this.gun_index].deactivate();
         this.camera.applyGravity = false;
