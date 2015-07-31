@@ -105,6 +105,7 @@ socket.on('serverUpdate', function(data) {
         if (!data[existingPlayerId]) {
             // disconnected player
             opponents[existingPlayerId].sprite.dispose();
+            opponents[existingPlayerId].hitbox.dispose();
             delete opponents[existingPlayerId];
         }
     }
